@@ -1,0 +1,120 @@
+﻿@model RSHA.Models.Requests
+@{
+    ViewData["Title"] = "Request Details";
+}
+
+<br />
+<h2 class="text-info">Request Details</h2>
+
+<div class="p-4 border rounded">
+
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="FirstName"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="FirstName" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="LastName"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="LastName" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="PhoneNumber"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="PhoneNumber" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Location"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="Location" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="CarModel"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="CarModel" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="CarLicensePlate"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="CarLicensePlate" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="ProblemId"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="ProblemId" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Message"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="Message" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="RequestScheduledDate"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="RequestScheduledDate" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="RequestCreated"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="RequestCreated" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="MechanicAssigned"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="MechanicAssigned" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Completed"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="Completed" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Id"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="Id" disabled class="form-control" />
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
+        <a asp-action="Index" class="btn btn-success">Back to List</a>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<RSHA.Models.Requests>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br /><br />
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Previously Created Request</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info"> <i class="fas fa-plus"></i>&nbsp; New Request</a>
+    </div>
+</div>
+
+<br />
+<div>
+    <table class="table table-striped border">
+        <tr class="talbe-info">
+            <th>
+                @Html.DisplayNameFor(m => m.RequestScheduledDate)
+            </th>
+            <th><p>test</p></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.Id)
+                </td>
+                <td>
+                    <partial name="_TableButtonPartial" model="item.Id" />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
