@@ -1,4 +1,5 @@
-﻿@model RSHA.Models.Requests
+﻿@model RSHA.Models.ViewModels.RequestsViewModel
+@using RSHA.Extensions
 @{
     ViewData["Title"] = "Edit Request";
 }
@@ -7,94 +8,158 @@
 <h2 class="text-info">Edit Request</h2>
 
 
-<form method="POST" asp-action="Edit">
+<form method="POST">
     <div class="p-4 border rounded">
-        <input type="hidden" asp-for="Id" />
+        <input hidden asp-for="Requests.Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="FirstName"></label>
+                <label asp-for="Requests.FirstName"></label>
             </div>
             <div class="col-5">
-                <input asp-for="FirstName" class="form-control" />
+                <input asp-for="Requests.FirstName" class="form-control" />
             </div>
-            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <span asp-validation-for="Requests.FirstName" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="LastName"></label>
+                <label asp-for="Requests.LastName"></label>
             </div>
             <div class="col-5">
-                <input asp-for="LastName" class="form-control" />
+                <input asp-for="Requests.LastName" class="form-control" />
             </div>
-            <span asp-validation-for="LastName" class="text-danger"></span>
+            <span asp-validation-for="Requests.LastName" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="PhoneNumber"></label>
+                <label asp-for="Requests.PhoneNumber"></label>
             </div>
             <div class="col-3">
-                <input asp-for="PhoneNumber" class="form-control" />
+                <input asp-for="Requests.PhoneNumber" class="form-control" />
             </div>
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            <span asp-validation-for="Requests.PhoneNumber" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="Location"></label>
+                <label asp-for="Requests.Location"></label>
             </div>
             <div class="col-5">
-                <input asp-for="Location" class="form-control" />
+                <input asp-for="Requests.Location" class="form-control" />
             </div>
-            <span asp-validation-for="Location" class="text-danger"></span>
+            <span asp-validation-for="Requests.Location" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="CarModel"></label>
+                <label asp-for="Requests.CarModel"></label>
             </div>
             <div class="col-5">
-                <input asp-for="CarModel" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="CarLicensePlate"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="CarLicensePlate" class="form-control" />
+                <input asp-for="Requests.CarModel" class="form-control" />
             </div>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="ProblemId"></label>
+                <label asp-for="Requests.CarLicensePlate"></label>
             </div>
             <div class="col-5">
-                <input asp-for="ProblemId" class="form-control" />
+                <input asp-for="Requests.CarLicensePlate" class="form-control" />
             </div>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="Message"></label>
+                <label asp-for="ProblemTypes"></label>
             </div>
             <div class="col-5">
-                <input asp-for="Message" class="form-control" />
+                <select asp-for="@Model.Requests.ProblemId" asp-items="Model.ProblemTypes.ToSelectListItems(Model.Requests.ProblemId)" class="form-control"></select>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="RequestScheduledDate"></label>
+                <label asp-for="Requests.Message"></label>
             </div>
             <div class="col-5">
-                <input type="date" asp-for="RequestScheduledDate" class="form-control" />
+                <input asp-for="Requests.Message" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label>Schedule date</label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Requests.RequestScheduledDate" type="text" id="datepicker" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label>Schedule time</label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Requests.RequestScheduledTime" type="text" id="timepicker" class="form-control timepicker" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Requests.MechanicAssigned"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Requests.MechanicAssigned" readonly class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Requests.Completed"></label>
+            </div>
+            <div class="col-5">
+                <input type="checkbox" asp-for="Requests.Completed" disabled class="form-control" />
             </div>
         </div>
         <br />
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" asp-route-id="@Model.Id" value="Update" />
-            <a asp-action="Index" class="btn btn-success">Back to List</a>
+            <input type="submit" class="btn btn-primary" value="Update" />
+            <a asp-action="Index" class="btn btn-success">Back to overview</a>
         </div>
     </div>
 </form>
 
 @section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $('.timepicker').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '0',
+            maxTime: '23:30',
+            startTime: '0',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $(function () {
+            $("#datepicker").datepicker({
+                minDate: +0, maxDate: "+3m", dateFormat: "dd-mm-yy", showAnim: "fadeIn"
+            });
+        });
+
+        $(document).ready(function () {
+            var appointmentTime = document.getElementById('datepicker').value;
+            var splitData = "";
+
+            if (appointmentTime.indexOf(" ") > 0) {
+                splitData = appointmentTime.split(" ");
+            }
+            else {
+                splitData = appointmentTime.split("T");
+            }
+
+            var time = splitData[1].substring(0, 5);
+            if (time.slice(-1) == ":") {
+                time = time.substring(0, time.length - 1);
+
+            }
+
+            $('#datepicker').attr('value', splitData[0]);
+            $('#timepicker').attr('value', time);
+        });
+    </script>
 }

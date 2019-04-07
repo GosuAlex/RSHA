@@ -13,9 +13,9 @@ namespace RSHA.Extensions
             return from item in items
                    select new SelectListItem
                    {
-                       //Text = item.GetPropertyValue("Name"),
-                       //Value = item.GetPropertyValue("Id"),
-                       //Selected = item.GetPropertyValue("Id").Equals(selectedValue.ToString())
+                       Text = item.GetPropertyValue("Name"),
+                       Value = item.GetPropertyValue("Id"),
+                       Selected = item.GetPropertyValue("Id").Equals(selectedValue.ToString())
                    };
         }
 
@@ -28,9 +28,9 @@ namespace RSHA.Extensions
             return from item in items
                    select new SelectListItem
                    {
-                       //Text = item.GetPropertyValue("Name"),
-                       //Value = item.GetPropertyValue("Id"),
-                       //Selected = item.GetPropertyValue("Id").Equals(selectedValue.ToString())
+                       Text = item.GetPropertyValue("Name"),
+                       Value = item.GetPropertyValue("Id"),
+                       Selected = item.GetPropertyValue("Id").Equals(selectedValue.ToString())
                    };
         }
 

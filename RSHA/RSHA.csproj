@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\Mech\Controllers\" />
     <Folder Include="Controllers\" />
   </ItemGroup>

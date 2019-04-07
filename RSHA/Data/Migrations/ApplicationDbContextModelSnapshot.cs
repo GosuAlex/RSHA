@@ -204,7 +204,7 @@ namespace RSHA.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CarLicensePlate");
+                    b.Property<string>("CarLicensePlate");
 
                     b.Property<string>("CarModel");
 
@@ -230,8 +230,6 @@ namespace RSHA.Data.Migrations
                     b.Property<DateTime>("RequestCreated");
 
                     b.Property<DateTime>("RequestScheduledDate");
-
-                    b.Property<DateTime>("RequestScheduledTime");
 
                     b.HasKey("Id");
 

@@ -1,4 +1,5 @@
-﻿@model RSHA.Models.Requests
+﻿@model RSHA.Models.ViewModels.RequestsViewModel
+@using RSHA.Extensions
 @{
     ViewData["Title"] = "Create Request";
 }
@@ -7,93 +8,121 @@
 <h2 class="text-info">Create Request</h2>
 
 
-<form method="POST" asp-action="Create">
+<form method="POST">
     <div class="p-4 border rounded">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="FirstName"></label>
+                <label asp-for="Requests.FirstName"></label>
             </div>
             <div class="col-5">
-                <input asp-for="FirstName" class="form-control" />
+                <input asp-for="Requests.FirstName" class="form-control" />
             </div>
-            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <span asp-validation-for="Requests.FirstName" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="LastName"></label>
+                <label asp-for="Requests.LastName"></label>
             </div>
             <div class="col-5">
-                <input asp-for="LastName" class="form-control" />
+                <input asp-for="Requests.LastName" class="form-control" />
             </div>
-            <span asp-validation-for="LastName" class="text-danger"></span>
+            <span asp-validation-for="Requests.LastName" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="PhoneNumber"></label>
+                <label asp-for="Requests.PhoneNumber"></label>
             </div>
             <div class="col-3">
-                <input asp-for="PhoneNumber" class="form-control" />
+                <input asp-for="Requests.PhoneNumber" class="form-control" />
             </div>
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            <span asp-validation-for="Requests.PhoneNumber" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="Location"></label>
+                <label asp-for="Requests.Location"></label>
             </div>
             <div class="col-5">
-                <input asp-for="Location" class="form-control" />
+                <input asp-for="Requests.Location" class="form-control" />
             </div>
-            <span asp-validation-for="Location" class="text-danger"></span>
+            <span asp-validation-for="Requests.Location" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="CarModel"></label>
+                <label asp-for="Requests.CarModel"></label>
             </div>
             <div class="col-5">
-                <input asp-for="CarModel" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="CarLicensePlate"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="CarLicensePlate" class="form-control" />
+                <input asp-for="Requests.CarModel" class="form-control" />
             </div>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="ProblemId"></label>
+                <label asp-for="Requests.CarLicensePlate"></label>
             </div>
             <div class="col-5">
-                <input asp-for="ProblemId" class="form-control" />
+                <input asp-for="Requests.CarLicensePlate" class="form-control" />
             </div>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="Message"></label>
+                <label>Problem type</label>
             </div>
             <div class="col-5">
-                <input asp-for="Message" class="form-control" />
+                <select asp-for="@Model.Requests.ProblemId" asp-items="Model.ProblemTypes.ToSelectListItems(Model.Requests.ProblemId)" class="form-control"></select>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-2">
-                <label asp-for="RequestScheduledDate"></label>
+                <label asp-for="Requests.Message"></label>
             </div>
             <div class="col-5">
-                <input type="date" asp-for="RequestScheduledDate" class="form-control" />
+                <input asp-for="Requests.Message" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label>Schedule date</label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Requests.RequestScheduledDate" value="" type="text" id="datepicker" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label>Schedule time</label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Requests.RequestScheduledTime" value="" type="text" class="form-control timepicker" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Create" />
-            <a asp-action="Index" class="btn btn-success">Back</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-success">Back</a>
         </div>
     </div>
 </form>
 
 @section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        $('.timepicker').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '0',
+            maxTime: '23:30',
+            startTime: '0',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $(function () {
+            $("#datepicker").datepicker({
+                minDate: +0, maxDate: "+3m", dateFormat: "dd-mm-yy", showAnim: "fadeIn"
+            });
+        });
+    </script>
 }

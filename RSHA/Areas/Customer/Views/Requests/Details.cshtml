@@ -1,4 +1,4 @@
-﻿@model RSHA.Models.Requests
+﻿@model RSHA.Models.ViewModels.RequestsViewModel
 @{
     ViewData["Title"] = "Request Details";
 }
@@ -6,115 +6,133 @@
 <br />
 <h2 class="text-info">Request Details</h2>
 
-<div class="p-4 border rounded">
 
+<div class="p-4 border rounded">
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="FirstName"></label>
+            <label asp-for="Requests.FirstName"></label>
         </div>
         <div class="col-5">
-            <input asp-for="FirstName" disabled class="form-control" />
+            <input asp-for="Requests.FirstName" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="LastName"></label>
+            <label asp-for="Requests.LastName"></label>
         </div>
         <div class="col-5">
-            <input asp-for="LastName" disabled class="form-control" />
+            <input asp-for="Requests.LastName" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="PhoneNumber"></label>
+            <label asp-for="Requests.PhoneNumber"></label>
         </div>
-        <div class="col-5">
-            <input asp-for="PhoneNumber" disabled class="form-control" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-2">
-            <label asp-for="Location"></label>
-        </div>
-        <div class="col-5">
-            <input asp-for="Location" disabled class="form-control" />
+        <div class="col-3">
+            <input asp-for="Requests.PhoneNumber" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="CarModel"></label>
+            <label asp-for="Requests.Location"></label>
         </div>
         <div class="col-5">
-            <input asp-for="CarModel" disabled class="form-control" />
+            <input asp-for="Requests.Location" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="CarLicensePlate"></label>
+            <label asp-for="Requests.CarModel"></label>
         </div>
         <div class="col-5">
-            <input asp-for="CarLicensePlate" disabled class="form-control" />
+            <input asp-for="Requests.CarModel" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="ProblemId"></label>
+            <label asp-for="Requests.CarLicensePlate"></label>
         </div>
         <div class="col-5">
-            <input asp-for="ProblemId" disabled class="form-control" />
+            <input asp-for="Requests.CarLicensePlate" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="Message"></label>
+            <label asp-for="ProblemTypes"></label>
         </div>
         <div class="col-5">
-            <input asp-for="Message" disabled class="form-control" />
+            <input asp-for="Requests.ProblemTypes.Name" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="RequestScheduledDate"></label>
+            <label asp-for="Requests.Message"></label>
         </div>
         <div class="col-5">
-            <input asp-for="RequestScheduledDate" disabled class="form-control" />
+            <input asp-for="Requests.Message" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="RequestCreated"></label>
+            <label>Schedule date</label>
         </div>
         <div class="col-5">
-            <input asp-for="RequestCreated" disabled class="form-control" />
+            <input asp-for="Requests.RequestScheduledDate" type="text" id="datepicker" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="MechanicAssigned"></label>
+            <label>Schedule time</label>
         </div>
         <div class="col-5">
-            <input asp-for="MechanicAssigned" disabled class="form-control" />
+            <input asp-for="Requests.RequestScheduledTime" type="text" id="timepicker" readonly class="form-control timepicker" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="Completed"></label>
+            <label asp-for="Requests.MechanicAssigned"></label>
         </div>
         <div class="col-5">
-            <input asp-for="Completed" disabled class="form-control" />
+            <input asp-for="Requests.MechanicAssigned" readonly class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="Id"></label>
+            <label asp-for="Requests.Completed"></label>
         </div>
         <div class="col-5">
-            <input asp-for="Id" disabled class="form-control" />
+            <input type="checkbox" asp-for="Requests.Completed" disabled class="form-control" />
         </div>
     </div>
     <br />
     <div class="form-group">
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
-        <a asp-action="Index" class="btn btn-success">Back to List</a>
+        <input asp-action="Edit" asp-route-id="@Model.Requests.Id" class="btn btn-primary" value="Edit" />
+        <a asp-action="Index" class="btn btn-success">Back to overview</a>
     </div>
 </div>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            var appointmentTime = document.getElementById('datepicker').value;
+            var splitData = "";
+
+            if (appointmentTime.indexOf(" ") > 0) {
+                splitData = appointmentTime.split(" ");
+            }
+            else {
+                splitData = appointmentTime.split("T");
+            }
+
+            var time = splitData[1].substring(0, 5);
+            if (time.slice(-1) == ":") {
+                time = time.substring(0, time.length - 1);
+
+            }
+
+            $('#datepicker').attr('value', splitData[0]);
+            $('#timepicker').attr('value', time);
+        });
+    </script>
+}

@@ -27,7 +27,7 @@ namespace RSHA.Models
         public string Location { get; set; }
 
         [Display(Name = "Car license plate")]
-        public int CarLicensePlate { get; set; }
+        public string CarLicensePlate { get; set; }
 
         [Display(Name = "Car model")]
         public string CarModel { get; set; }
@@ -42,10 +42,12 @@ namespace RSHA.Models
 
         public DateTime RequestScheduledDate { get; set; }
 
+        [NotMapped]
         public DateTime RequestScheduledTime { get; set; }
 
-        public bool Completed { get; set; } = true;
+        public bool Completed { get; set; } = false;
 
+        [Display(Name = "Mechanic assigned")]
         public string MechanicAssigned { get; set; }
     }
 }
