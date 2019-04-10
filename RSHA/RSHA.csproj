@@ -10,6 +10,8 @@
     <Compile Remove="Data\Migrations\20190410123411_updatedUserAndRequestWithRequiredAnnotations.Designer.cs" />
     <Compile Remove="Data\Migrations\20190410152730_addMechanicsModel.cs" />
     <Compile Remove="Data\Migrations\20190410152730_addMechanicsModel.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190410211405_changedRequestForeignKeyToApplicationUserId.cs" />
+    <Compile Remove="Data\Migrations\20190410211405_changedRequestForeignKeyToApplicationUserId.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

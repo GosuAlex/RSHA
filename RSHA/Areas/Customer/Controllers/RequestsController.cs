@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,10 @@ namespace RSHA.Areas.Customer.Controllers
         // INDEX Action Method      --------------------------------    INDEX
         public async Task<IActionResult> Index()
         {
-            var requests = _db.Requests.Include(m => m.ProblemTypes);
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var requests = _db.Requests.Where(u => u.CustomerId == id).Include(m => m.ProblemTypes);
+
             return View(await requests.ToListAsync());
         }
 

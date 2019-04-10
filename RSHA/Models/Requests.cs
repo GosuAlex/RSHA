@@ -51,5 +51,10 @@ namespace RSHA.Models
         public int MechanicAssigned { get; set; }
         [ForeignKey("MechanicAssigned")]
         public virtual Mechanics Mechanics { get; set; }
+
+        [Display(Name = "Customer Id")]
+        public string CustomerId { get; set; }
+        [ForeignKey("CustomerId")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }
