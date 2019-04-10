@@ -39,9 +39,9 @@ namespace RSHA.Models
         public string Message { get; set; }
 
         public DateTime RequestCreated { get; set; }
-
+        [Required]
         public DateTime RequestScheduledDate { get; set; }
-
+        [Required]
         [NotMapped]
         public DateTime RequestScheduledTime { get; set; }
 

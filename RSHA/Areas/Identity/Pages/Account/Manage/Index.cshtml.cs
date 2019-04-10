@@ -8,18 +8,23 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RSHA.Models;
 
 namespace RSHA.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        //private readonly UserManager<IdentityUser> _userManager;
+        //private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            //UserManager<IdentityUser> userManager,
+            //SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -46,6 +51,19 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Car Model")]
+            public string CarModel { get; set; }
+
+            [Display(Name = "Car License Plate")]
+            public string CarLicensePlate { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -65,7 +83,11 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                CarModel = user.CarModel,
+                CarLicensePlate = user.CarLicensePlate
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -85,6 +107,11 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+
+            //if (Input.FirstName != user.FirstName) { user.FirstName = Input.FirstName; }
+            //if (Input.LastName != user.LastName) { user.LastName = Input.LastName; }
+            if (Input.CarModel != user.CarModel) { user.CarModel = Input.CarModel; }
+            if (Input.CarLicensePlate != user.CarLicensePlate) { user.CarLicensePlate = Input.CarLicensePlate; }
 
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
@@ -107,6 +134,8 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
