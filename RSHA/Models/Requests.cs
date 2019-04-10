@@ -48,6 +48,8 @@ namespace RSHA.Models
         public bool Completed { get; set; } = false;
 
         [Display(Name = "Mechanic assigned")]
-        public string MechanicAssigned { get; set; }
+        public int MechanicAssigned { get; set; }
+        [ForeignKey("MechanicAssigned")]
+        public virtual Mechanics Mechanics { get; set; }
     }
 }

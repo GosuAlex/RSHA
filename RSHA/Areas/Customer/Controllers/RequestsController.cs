@@ -36,8 +36,9 @@ namespace RSHA.Areas.Customer.Controllers
         }
 
         // GET Create Action Method --------------------------------    CREATE
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
+            ViewBag.id = id;
             return View(RequestsVM);
         }
 
@@ -164,7 +165,25 @@ namespace RSHA.Areas.Customer.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
         }
+
+        // GET Locate Action Method --------------------------------        LOCATE
+        public async Task<IActionResult> Locate(string searchName = null, string searchCity = null, int? searchPostalCode = null, string searchState = null)
+        {
+            var mechanicList = await _db.Mechanics.ToListAsync();
+
+            if (searchName != null) { mechanicList = mechanicList.Where(m => m.Name.ToLower().Contains(searchName.ToLower())).ToList(); }
+            if (searchCity != null) { mechanicList = mechanicList.Where(m => m.City.ToLower().Contains(searchCity.ToLower())).ToList(); }
+            if (searchPostalCode != null) { mechanicList = mechanicList.Where(m => m.PostalCode == searchPostalCode).ToList(); }
+            if (searchState != null) { mechanicList = mechanicList.Where(m => m.State.ToLower().Contains(searchState.ToLower())).ToList(); }
+
+            return View(mechanicList);
+        }
+
+
+
+
+
+
     }
 }

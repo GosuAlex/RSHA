@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RSHA.Data;
 
 namespace RSHA.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190410180310_changedStringToIntOnMechanicAssigned")]
+    partial class changedStringToIntOnMechanicAssigned
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,8 +261,6 @@ namespace RSHA.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MechanicAssigned");
-
                     b.HasIndex("ProblemId");
 
                     b.ToTable("Requests");
@@ -332,11 +332,6 @@ namespace RSHA.Data.Migrations
 
             modelBuilder.Entity("RSHA.Models.Requests", b =>
                 {
-                    b.HasOne("RSHA.Models.Mechanics", "Mechanics")
-                        .WithMany()
-                        .HasForeignKey("MechanicAssigned")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("RSHA.Models.ProblemTypes", "ProblemTypes")
                         .WithMany()
                         .HasForeignKey("ProblemId")

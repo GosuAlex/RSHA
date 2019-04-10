@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RSHA.Data;
 
 namespace RSHA.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190410152822_addMechanicsModel")]
+    partial class addMechanicsModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,7 +199,8 @@ namespace RSHA.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("PostalCode");
+                    b.Property<string>("PostalCode")
+                        .IsRequired();
 
                     b.Property<string>("State")
                         .IsRequired();
@@ -245,7 +248,7 @@ namespace RSHA.Data.Migrations
                     b.Property<string>("Location")
                         .IsRequired();
 
-                    b.Property<int>("MechanicAssigned");
+                    b.Property<string>("MechanicAssigned");
 
                     b.Property<string>("Message");
 
@@ -258,8 +261,6 @@ namespace RSHA.Data.Migrations
                     b.Property<DateTime>("RequestScheduledDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MechanicAssigned");
 
                     b.HasIndex("ProblemId");
 
@@ -332,11 +333,6 @@ namespace RSHA.Data.Migrations
 
             modelBuilder.Entity("RSHA.Models.Requests", b =>
                 {
-                    b.HasOne("RSHA.Models.Mechanics", "Mechanics")
-                        .WithMany()
-                        .HasForeignKey("MechanicAssigned")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("RSHA.Models.ProblemTypes", "ProblemTypes")
                         .WithMany()
                         .HasForeignKey("ProblemId")

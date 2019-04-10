@@ -2,34 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using RSHA.Data;
 using RSHA.Models;
 
 namespace RSHA.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        //private readonly UserManager<IdentityUser> _userManager;
-        //private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _db;
 
         public IndexModel(
-            //UserManager<IdentityUser> userManager,
-            //SignInManager<IdentityUser> signInManager,
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IEmailSender emailSender,
+            ApplicationDbContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _db = db;
         }
 
         public string Username { get; set; }
@@ -78,16 +80,20 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userWithCustomPropeties = await _db.ApplicationUser.FindAsync(id);
+
+
             Username = userName;
 
             Input = new InputModel
             {
                 Email = email,
                 PhoneNumber = phoneNumber,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                CarModel = user.CarModel,
-                CarLicensePlate = user.CarLicensePlate
+                FirstName = userWithCustomPropeties.FirstName,
+                LastName = userWithCustomPropeties.LastName,
+                CarModel = userWithCustomPropeties.CarModel,
+                CarLicensePlate = userWithCustomPropeties.CarLicensePlate
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -108,10 +114,13 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            //if (Input.FirstName != user.FirstName) { user.FirstName = Input.FirstName; }
-            //if (Input.LastName != user.LastName) { user.LastName = Input.LastName; }
-            if (Input.CarModel != user.CarModel) { user.CarModel = Input.CarModel; }
-            if (Input.CarLicensePlate != user.CarLicensePlate) { user.CarLicensePlate = Input.CarLicensePlate; }
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userWithCustomPropeties = await _db.ApplicationUser.FindAsync(id);
+
+            //if (Input.FirstName != userWithCustomPropeties.FirstName) { userWithCustomPropeties.FirstName = Input.FirstName; }
+            //if (Input.LastName != userWithCustomPropeties.LastName) { userWithCustomPropeties.LastName = Input.LastName; }
+            if (Input.CarModel != userWithCustomPropeties.CarModel) { userWithCustomPropeties.CarModel = Input.CarModel; }
+            if (Input.CarLicensePlate != userWithCustomPropeties.CarLicensePlate) { userWithCustomPropeties.CarLicensePlate = Input.CarLicensePlate; }
 
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)

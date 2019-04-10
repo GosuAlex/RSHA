@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20190410123411_updatedUserAndRequestWithRequiredAnnotations.cs" />
     <Compile Remove="Data\Migrations\20190410123411_updatedUserAndRequestWithRequiredAnnotations.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190410152730_addMechanicsModel.cs" />
+    <Compile Remove="Data\Migrations\20190410152730_addMechanicsModel.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Areas\Mech\Controllers\" />
+    <Folder Include="Areas\Mechanic\Controllers\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
 
@@ -29,10 +31,10 @@
     <Content Update="Areas\Customer\Views\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Mech\Views\_ViewImports.cshtml">
+    <Content Update="Areas\Mechanic\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Mech\Views\_ViewStart.cshtml">
+    <Content Update="Areas\Mechanic\Views\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
