@@ -41,6 +41,11 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="form-group alert alert-warning" style="height:50px; width:160px; padding-right:10px;">
+                <label asp-for="Input.IsMechanic"></label>
+                <input asp-for="Input.IsMechanic" type="checkbox" class="" style="margin-left:10px;" />
+            </div>
+            <p>Note: Users registering as mech must afterward be approved by admin before account can be used.</p>
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <button type="submit" class="btn btn-primary">Register</button>

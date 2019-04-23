@@ -109,11 +109,17 @@
 
     <script>
 
+        var currentTime = new Date();
+        var currentTimeHours = currentTime.getHours();
+        //var currentTimeHours = currentTimeHours + 3;
+
         $('.timepicker').timepicker({
             timeFormat: 'HH:mm',
             interval: 30,
-            minTime: '0',
+            //minTime: '0',
+            minTime: "'"+currentTimeHours+"'",
             maxTime: '23:30',
+            defaultTime: 'now',
             startTime: '0',
             dynamic: false,
             dropdown: true,

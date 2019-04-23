@@ -62,6 +62,9 @@ namespace RSHA.Areas.Customer.Controllers
 
             RequestsVM.Requests.RequestCreated = DateTime.Now;
 
+            var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            RequestsVM.Requests.CustomerId = customerId;
+
             _db.Requests.Add(RequestsVM.Requests);
             await _db.SaveChangesAsync();
 

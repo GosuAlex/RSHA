@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Areas\Mechanic\Controllers\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
 
