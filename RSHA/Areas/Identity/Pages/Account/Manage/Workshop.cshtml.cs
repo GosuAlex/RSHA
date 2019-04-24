@@ -1,0 +1,85 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using RSHA.Data;
+using RSHA.Models;
+
+namespace RSHA.Areas.Identity.Pages.Account.Manage
+{
+    public class WorkshopModel : PageModel
+    {
+        private readonly ApplicationDbContext _db;
+
+        public WorkshopModel(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
+        [BindProperty]
+        public Mechanics Mechanic { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
+        {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (id == null)
+            {
+                return NotFound($"Unable to load user with ID '{id}'.");
+            }
+
+            var mechanic = await _db.Mechanics.FirstOrDefaultAsync(m => m.UserId == id);
+            if (mechanic == null)
+            {
+                StatusMessage = "This user is not bound to any mechanic workshop. Please input your workshop details.";
+
+                return Page();
+            }
+
+            Mechanic = new Mechanics
+            {
+                Name = mechanic.Name,
+                Street = mechanic.Street,
+                City = mechanic.City,
+                PostalCode = mechanic.PostalCode,
+                State = mechanic.State
+            };
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (id == null)
+            {
+                return NotFound($"Unable to load user with ID '{id}'.");
+            }
+
+            var mechanic = await _db.Mechanics.FirstOrDefaultAsync(m => m.UserId == id);
+
+            if (Mechanic.Name != mechanic.Name) { mechanic.Name = Mechanic.Name; }
+            if (Mechanic.Street != mechanic.Street) { mechanic.Street = Mechanic.Street; }
+            if (Mechanic.City != mechanic.City) { mechanic.City = Mechanic.City; }
+            if (Mechanic.PostalCode != mechanic.PostalCode) { mechanic.PostalCode = Mechanic.PostalCode; }
+            if (Mechanic.State != mechanic.State) { mechanic.State = Mechanic.State; }
+
+            await _db.SaveChangesAsync();
+
+            StatusMessage = "Your profile has been updated";
+            return RedirectToPage();
+        }
+
+    }
+}
