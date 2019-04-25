@@ -1,0 +1,114 @@
+﻿@model IEnumerable<RSHA.Models.Requests>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br /><br />
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Incoming Request Overview</h2>
+    </div>
+    <div class="col-6 text-right">
+    </div>
+</div>
+
+<br />
+
+<div>
+    <table class="table table-striped border">
+        <tr class="table-info">
+            <th>
+                @Html.DisplayNameFor(m => m.RequestCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.RequestScheduledDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.ProblemTypes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.MechanicAssigned)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.Completed)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Where(m => m.Completed == false))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.RequestCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.RequestScheduledDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.ProblemTypes.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.MechanicAssigned)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Completed)
+                </td>
+                <td>
+                    <partial name="_TableButtonAcceptRequestPartial" model="item.Id" />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<br />  <br />
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-secondary">Past Request</h2>
+    </div>
+    <div class="col-6 text-right">
+    </div>
+</div>
+
+<br />
+
+<div>
+    <table class="table table-striped border">
+        @foreach (var item in Model.Where(m => m.Completed == true))
+        {
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(m => item.RequestCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.RequestScheduledDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.ProblemTypes.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.MechanicAssigned)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Completed)
+                </td>
+                <td>
+                    <partial name="_TableButtonAcceptRequestPartialHistory" model="item.Id" />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
