@@ -24,6 +24,9 @@ namespace RSHA.Models
         public int PhoneNumber { get; set; }
 
         [Required]
+        public string Email { get; set; }
+
+        [Required]
         public string Location { get; set; }
 
         [Display(Name = "Car license plate")]
@@ -46,6 +49,8 @@ namespace RSHA.Models
         public DateTime RequestScheduledTime { get; set; }
 
         public bool Completed { get; set; } = false;
+
+        public bool AcceptedByMechanic { get; set; }
 
         [Display(Name = "Mechanic assigned")]
         public int MechanicAssigned { get; set; }

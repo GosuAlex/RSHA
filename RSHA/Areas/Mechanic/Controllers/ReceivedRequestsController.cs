@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using RSHA.Data;
 using RSHA.Models;
 using RSHA.Models.ViewModels;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace RSHA.Areas.Mechanic.Controllers
 {
@@ -43,22 +45,87 @@ namespace RSHA.Areas.Mechanic.Controllers
             return View(await requests.ToListAsync());
         }
 
-        // ACCEPT Action Method      --------------------------------    ACCEPT
-        public async Task<IActionResult> Accept()
+        // GET ACCEPT Action Method      --------------------------------    ACCEPT
+        public async Task<IActionResult> Accept(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            RequestsVM.Requests = await _db.Requests.Include(m => m.ProblemTypes).SingleOrDefaultAsync(m => m.Id == id);
 
+            if (RequestsVM.Requests == null)
+            {
+                return NotFound();
+            }
+
+            return View(RequestsVM);
             //need to be put in a list or somehting, and possbile have stages of progress. Also comment from mech?
         }
 
+        // POST ACCEPT Action Method   --------------------------------    ACCEPT
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Accept(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var requestFromDb = _db.Requests.Where(m => m.Id == RequestsVM.Requests.Id).FirstOrDefault();
 
+                requestFromDb.AcceptedByMechanic = RequestsVM.Requests.AcceptedByMechanic;
 
+                await _db.SaveChangesAsync();
 
+                // SEND Email about accepted request to Customer.
+                MimeMessage message = new MimeMessage();
 
+                var mechanic = await _db.Mechanics.Where(m => m.Id == requestFromDb.MechanicAssigned).FirstOrDefaultAsync();
 
-        // DELETE Action Method      --------------------------------    DELETE
-        public async Task<IActionResult> Delete()
+                MailboxAddress from = new MailboxAddress(mechanic.Name, "admin@example.com");
+                message.From.Add(from);
+
+                MailboxAddress to = new MailboxAddress(requestFromDb.FirstName + " " + requestFromDb.LastName, requestFromDb.Email);
+                message.To.Add(to);
+
+                message.Subject = "Request scheduled on date " + requestFromDb.RequestScheduledDate + " was accepted";
+
+                //BodyBuilder bodyBuilder = new BodyBuilder();
+                //bodyBuilder.HtmlBody = "<h1>Hello World!</h1>";
+                //bodyBuilder.TextBody = "Hello World!";
+                //message.Body = bodyBuilder.ToMessageBody();
+                message.Body = new TextPart("plain")
+                {
+                    Text = @"Your " + requestFromDb.ProblemTypes + " request on the date " + requestFromDb.RequestScheduledDate + " was accepted by " + mechanic.Name +
+
+" Here's the messaged that was sent to " + mechanic.Name +
+"" +
+"" +
+"-- Have a pleasant day."
+                };
+
+                using (var client = new SmtpClient())
+                {
+                    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                    client.Connect("smtp.gmail.com", 587, false);
+
+                    // Note: only needed if the SMTP server requires authentication
+                    client.Authenticate("RSHA@gmail.com", "RSHA123*");
+
+                    client.Send(message);
+                    client.Disconnect(true);
+
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            
+            return View(RequestsVM);
+        }
+
+        // DENY Action Method       --------------------------------    DENY
+        public async Task<IActionResult> Deny()
         {
             return View();
 
