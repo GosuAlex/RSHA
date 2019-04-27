@@ -24,9 +24,6 @@ namespace RSHA.Models
         public int PhoneNumber { get; set; }
 
         [Required]
-        public string Email { get; set; }
-
-        [Required]
         public string Location { get; set; }
 
         [Display(Name = "Car license plate")]

@@ -85,8 +85,8 @@ namespace RSHA.Areas.Mechanic.Controllers
                 MailboxAddress from = new MailboxAddress(mechanic.Name, "admin@example.com");
                 message.From.Add(from);
 
-                MailboxAddress to = new MailboxAddress(requestFromDb.FirstName + " " + requestFromDb.LastName, requestFromDb.Email);
-                message.To.Add(to);
+                //MailboxAddress to = new MailboxAddress(requestFromDb.FirstName + " " + requestFromDb.LastName, requestFromDb.Email);
+                //message.To.Add(to);
 
                 message.Subject = "Request scheduled on date " + requestFromDb.RequestScheduledDate + " was accepted";
 
@@ -124,12 +124,18 @@ namespace RSHA.Areas.Mechanic.Controllers
             return View(RequestsVM);
         }
 
-        // DENY Action Method       --------------------------------    DENY
-        public async Task<IActionResult> Deny()
+        // DELETE Action Method       --------------------------------    DELETE
+        public async Task<IActionResult> Delete()
         {
             return View();
 
             //just delete request and send notification and email to customer notifying them of cannon accept this request
+        }
+
+        // FINISH Action Method       --------------------------------    FINISH
+        public async Task<IActionResult> Finish()
+        {
+            return View();
         }
 
     }
