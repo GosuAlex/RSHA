@@ -12,6 +12,7 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using RSHA.Functions;
 
 namespace RSHA.Areas.Mechanic.Controllers
 {
@@ -92,41 +93,12 @@ namespace RSHA.Areas.Mechanic.Controllers
 
                 await _db.SaveChangesAsync();
 
-                // SEND Email about accepted request to Customer.
-                MimeMessage message = new MimeMessage();
+                string textInEmail = @"Hello, " + customerUser.LastName + " Your " + requestFromDb.ProblemTypes.Name + " request on the date " + requestFromDb.RequestScheduledDate + " was accepted by " + mechanic.Name + ".\r" + "Here's the messaged that was sent to " + mechanic.Name + ":\r" + requestFromDb.Message + ".\r\r" + "Have a pleasant day.";
 
-                MailboxAddress from = new MailboxAddress(mechanic.Name, mechanicUser.Email);
-                message.From.Add(from);
+                var sendEmail = new SendEmail();
+                sendEmail.RequestNotification(mechanic, mechanicUser, customerUser, requestFromDb, textInEmail, _configuration["RSHAEmail:EmailPassword"]);
 
-                MailboxAddress to = new MailboxAddress(requestFromDb.FirstName + " " + requestFromDb.LastName, customerUser.Email);
-                message.To.Add(to);
-
-                message.Subject = "Request scheduled on date " + requestFromDb.RequestScheduledDate + " was accepted";
-
-                //BodyBuilder bodyBuilder = new BodyBuilder();
-                //bodyBuilder.HtmlBody = "<h1>Hello World!</h1>";
-                //bodyBuilder.TextBody = "Hello World!";
-                //message.Body = bodyBuilder.ToMessageBody();
-                message.Body = new TextPart("plain")
-                {
-                    Text = @"Hello, " + customerUser.LastName + " Your " + requestFromDb.ProblemTypes.Name + " request on the date " + requestFromDb.RequestScheduledDate + " was accepted by " + mechanic.Name + ".\r" + "Here's the messaged that was sent to " + mechanic.Name + ":\r" + requestFromDb.Message + ".\r\r" + "Have a pleasant day."
-                };
-
-                using (var client = new SmtpClient())
-                {
-                    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                    client.Connect("smtp.gmail.com", 587, false);
-
-                    // Note: only needed if the SMTP server requires authentication
-                    client.Authenticate("rsha.noreply@gmail.com", _configuration["RSHAEmail:EmailPassword"]);
-
-                    client.Send(message);
-                    client.Disconnect(true);
-
-                    return RedirectToAction(nameof(Index));
-                }
+                return RedirectToAction(nameof(Index));
             }
             
             return View(RequestsVM);
