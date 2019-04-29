@@ -104,18 +104,67 @@ namespace RSHA.Areas.Mechanic.Controllers
             return View(RequestsVM);
         }
 
-        // DELETE Action Method       --------------------------------    DELETE
-        public async Task<IActionResult> Delete()
+        // DELETE POST Action Method       --------------------------------    DELETE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            Requests request = await _db.Requests.FindAsync(id);
 
+            if (request == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var requestFromDb = _db.Requests.Where(m => m.Id == request.Id).FirstOrDefault();
+                var customerUser = _db.ApplicationUser.Where(u => u.Id == requestFromDb.CustomerId).Single();
+
+                var mechanic = _db.Mechanics.Where(m => m.Id == requestFromDb.MechanicAssigned).Single();
+                var mechanicUser = _db.ApplicationUser.Where(u => u.Id == mechanic.UserId).Single();
+
+                _db.Requests.Remove(request);
+                await _db.SaveChangesAsync();
+
+                string textInEmail = @"Hello, " + customerUser.LastName + " Your " + requestFromDb.ProblemTypes.Name + " request on the date " + requestFromDb.RequestScheduledDate + " was NOT accepted or CANCELED by " + mechanic.Name + ".\r" + "Here's the messaged that was sent to " + mechanic.Name + ":\r" + requestFromDb.Message + ".\rPlease send a new request to another mechanic if you still need assistance." + "\r\r" + "Have a pleasant day.";
+                var sendEmail = new SendEmail();
+                sendEmail.RequestNotification(mechanic, mechanicUser, customerUser, requestFromDb, textInEmail, _configuration["RSHAEmail:EmailPassword"]);
+
+                return RedirectToAction(nameof(Index));
+            }
             //just delete request and send notification and email to customer notifying them of cannon accept this request
         }
 
-        // FINISH Action Method       --------------------------------    FINISH
-        public async Task<IActionResult> Finish()
+        // FINISH POST Action Method       --------------------------------    FINISH
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Finish(int id)
         {
-            return View();
+            RequestsVM.Requests = await _db.Requests.Include(m => m.ProblemTypes).SingleOrDefaultAsync(m => m.Id == id);
+
+            if (RequestsVM.Requests == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var requestFromDb = _db.Requests.Where(m => m.Id == RequestsVM.Requests.Id).Single();
+
+                var customerUser = _db.ApplicationUser.Where(u => u.Id == requestFromDb.CustomerId).Single();
+                var mechanic = _db.Mechanics.Where(m => m.Id == requestFromDb.MechanicAssigned).Single();
+                var mechanicUser = _db.ApplicationUser.Where(u => u.Id == mechanic.UserId).Single();
+
+                //requestFromDb.Completed = RequestsVM.Requests.Completed;
+                requestFromDb.Completed = true;
+
+                await _db.SaveChangesAsync();
+
+                string textInEmail = @"Hello, " + customerUser.LastName + " Your " + requestFromDb.ProblemTypes.Name + " request on the date " + requestFromDb.RequestScheduledDate + " was finished by " + mechanic.Name + ".\r" + "Here's the messaged that was sent to " + mechanic.Name + ":\r" + requestFromDb.Message + ".\r\r" + "Have a pleasant day.";
+                var sendEmail = new SendEmail();
+                sendEmail.RequestNotification(mechanic, mechanicUser, customerUser, requestFromDb, textInEmail, _configuration["RSHAEmail:EmailPassword"]);
+
+                return RedirectToAction(nameof(Index));
+            }
         }
 
     }
