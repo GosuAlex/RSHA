@@ -40,7 +40,7 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model.Where(m => m.Completed == false))
+        @foreach (var item in Model.Where(m => m.Completed == false).Where(m => m.AcceptedByMechanic == false))
         {
             <tr>
                 <td>
@@ -73,7 +73,7 @@
 
 <div class="row">
     <div class="col-6">
-        <h2 class="text-secondary">Active Request</h2>
+        <h2 class="text-success">Active Request</h2>
     </div>
     <div class="col-6 text-right">
     </div>
@@ -108,7 +108,7 @@
 
         @foreach (var item in Model.Where(m => m.Completed == false).Where(m => m.AcceptedByMechanic == true))
             {
-            <tr class="table-secondary">
+            <tr>
                 <td>
                     @Html.DisplayFor(m => item.RequestCreated)
                 </td>

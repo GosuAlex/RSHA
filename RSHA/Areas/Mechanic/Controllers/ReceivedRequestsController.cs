@@ -10,6 +10,8 @@ using RSHA.Models;
 using RSHA.Models.ViewModels;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace RSHA.Areas.Mechanic.Controllers
 {
@@ -18,10 +20,14 @@ namespace RSHA.Areas.Mechanic.Controllers
     {
         private readonly ApplicationDbContext _db;
 
+        private IConfiguration _configuration { get; }
+
         [BindProperty]
         public RequestsViewModel RequestsVM { get; set; }
 
-        public ReceivedRequestsController(ApplicationDbContext db)
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public ReceivedRequestsController(ApplicationDbContext db, UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
             _db = db;
             RequestsVM = new RequestsViewModel()
@@ -29,6 +35,8 @@ namespace RSHA.Areas.Mechanic.Controllers
                 ProblemTypes = _db.ProblemTypes.ToList(),
                 Requests = new Models.Requests()
             };
+            _userManager = userManager;
+            _configuration = configuration;
         }
 
         // INDEX Action Method      --------------------------------    INDEX
@@ -72,6 +80,13 @@ namespace RSHA.Areas.Mechanic.Controllers
             if (ModelState.IsValid)
             {
                 var requestFromDb = _db.Requests.Where(m => m.Id == RequestsVM.Requests.Id).FirstOrDefault();
+                var customerUser = _db.ApplicationUser.Where(u => u.Id == requestFromDb.CustomerId).Single();
+
+                var mechanic = _db.Mechanics.Where(m => m.Id == requestFromDb.MechanicAssigned).Single();
+                var mechanicUser = _db.ApplicationUser.Where(u => u.Id == mechanic.UserId).Single();
+                //var customerUser = await _userManager.FindByIdAsync(requestFromDb.CustomerId);
+                //var customerEmail = await _userManager.GetEmailAsync(customerUser);
+                //if no user, try catch some error
 
                 requestFromDb.AcceptedByMechanic = RequestsVM.Requests.AcceptedByMechanic;
 
@@ -80,13 +95,11 @@ namespace RSHA.Areas.Mechanic.Controllers
                 // SEND Email about accepted request to Customer.
                 MimeMessage message = new MimeMessage();
 
-                var mechanic = await _db.Mechanics.Where(m => m.Id == requestFromDb.MechanicAssigned).FirstOrDefaultAsync();
-
-                MailboxAddress from = new MailboxAddress(mechanic.Name, "admin@example.com");
+                MailboxAddress from = new MailboxAddress(mechanic.Name, mechanicUser.Email);
                 message.From.Add(from);
 
-                //MailboxAddress to = new MailboxAddress(requestFromDb.FirstName + " " + requestFromDb.LastName, requestFromDb.Email);
-                //message.To.Add(to);
+                MailboxAddress to = new MailboxAddress(requestFromDb.FirstName + " " + requestFromDb.LastName, customerUser.Email);
+                message.To.Add(to);
 
                 message.Subject = "Request scheduled on date " + requestFromDb.RequestScheduledDate + " was accepted";
 
@@ -96,12 +109,7 @@ namespace RSHA.Areas.Mechanic.Controllers
                 //message.Body = bodyBuilder.ToMessageBody();
                 message.Body = new TextPart("plain")
                 {
-                    Text = @"Your " + requestFromDb.ProblemTypes + " request on the date " + requestFromDb.RequestScheduledDate + " was accepted by " + mechanic.Name +
-
-" Here's the messaged that was sent to " + mechanic.Name +
-"" +
-"" +
-"-- Have a pleasant day."
+                    Text = @"Hello, " + customerUser.LastName + " Your " + requestFromDb.ProblemTypes.Name + " request on the date " + requestFromDb.RequestScheduledDate + " was accepted by " + mechanic.Name + ".\r" + "Here's the messaged that was sent to " + mechanic.Name + ":\r" + requestFromDb.Message + ".\r\r" + "Have a pleasant day."
                 };
 
                 using (var client = new SmtpClient())
@@ -112,7 +120,7 @@ namespace RSHA.Areas.Mechanic.Controllers
                     client.Connect("smtp.gmail.com", 587, false);
 
                     // Note: only needed if the SMTP server requires authentication
-                    client.Authenticate("RSHA@gmail.com", "RSHA123*");
+                    client.Authenticate("rsha.noreply@gmail.com", _configuration["RSHAEmail:EmailPassword"]);
 
                     client.Send(message);
                     client.Disconnect(true);
