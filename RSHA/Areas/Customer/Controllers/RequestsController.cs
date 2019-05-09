@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RSHA.Data;
 using RSHA.Models;
 using RSHA.Models.ViewModels;
@@ -15,11 +16,12 @@ namespace RSHA.Areas.Customer.Controllers
     public class RequestsController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private IConfiguration _configuration { get; }
 
         [BindProperty]
         public RequestsViewModel RequestsVM { get; set; }
 
-        public RequestsController(ApplicationDbContext db)
+        public RequestsController(ApplicationDbContext db, IConfiguration configuration)
         {
             _db = db;
             RequestsVM = new RequestsViewModel()
@@ -27,6 +29,7 @@ namespace RSHA.Areas.Customer.Controllers
                 ProblemTypes = _db.ProblemTypes.ToList(),
                 Requests = new Models.Requests()
             };
+            _configuration = configuration;
         }
 
         // INDEX Action Method      --------------------------------    INDEX
@@ -187,9 +190,24 @@ namespace RSHA.Areas.Customer.Controllers
             return View(mechanicList);
         }
 
+        public async Task<IActionResult> Gmap()
+        {
+            ViewBag.apikey = _configuration["RSHAGmap:Apikey"];
+
+            var mechanics = await _db.Mechanics.ToListAsync();
+
+            foreach (var item in mechanics)
+            {
+                item.Name
+                item.Latitude
+                item.Longitude
+            }
 
 
+            string[] mechanicHouses = new string[] { "{ lat: 59, lng: 10 }", "{ lat: 59, lng: 11 }" };
 
+            return View(mechanicHouses);
+        }
 
 
     }

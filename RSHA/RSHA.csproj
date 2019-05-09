@@ -12,6 +12,8 @@
     <Compile Remove="Data\Migrations\20190410152730_addMechanicsModel.Designer.cs" />
     <Compile Remove="Data\Migrations\20190410211405_changedRequestForeignKeyToApplicationUserId.cs" />
     <Compile Remove="Data\Migrations\20190410211405_changedRequestForeignKeyToApplicationUserId.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190509213052_addedLatitudeAndLongitudeToMechanics.cs" />
+    <Compile Remove="Data\Migrations\20190509213052_addedLatitudeAndLongitudeToMechanics.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
