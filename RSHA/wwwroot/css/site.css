@@ -1,37 +1,560 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
+for details on configuring this project to bundle and minify static web assets.
 body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
+Set some basic padding to keep content from hitting the edges
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Carousel */
+Carousel
 .carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
+Make .svg files in the carousel display properly in older browsers
 .carousel-inner .item img[src$=".svg"] {
     width: 100%;
 }
 
-/* QR code generator */
+QR code generator
 #qrCode {
     margin: 15px;
 }
 
-/* Hide/rearrange for smaller screens */
+Hide/rearrange for smaller screens
 @media screen and (max-width: 767px) {
-    /* Hide captions */
+    /* Hide captions 
     .carousel-caption {
         display: none;
     }
+}
+
+*/
+
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Mandali|Poly|Sawarabi+Gothic&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.section-0 {
+    min-height: 100vh;
+    max-height: 100vh;
+}
+
+:root {
+    --Julius: "Julius Sans One", cursive;
+    /*Classy header*/
+    --Poly: "poly", cursive;
+    /*Text writing hard marks*/
+    --Sawarabi: "Sawarabi Gothic", cursive;
+    /*Ubuntu but classy*/
+    --Mandali: "Mandali", cursive;
+    /*Interface text*/
+    --gradiant: linear-gradient(to bottom, #bb2121, #d3564f, #e6827d, #f5adab, #ffffff);
+    --main-color: #47dddd;
+}
+
+.icon {
+    margin-top: 7px;
+    width: 60px;
+    height: 60px;
+    float: left;
+}
+
+.hamburger {
+    width: 50px;
+    height: 50px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    transition: all 1.5s ease;
+}
+
+.sticky-gone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: all 1.5s ease;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.nav-wrapper {
+    height: 80px;
+}
+
+header a {
+    font-family: var(--Mandali);
+    font-size: 1.5em;
+    color: whitesmoke;
+}
+
+header {
+    background: #256fdd;
+    background: var(--gradiant);
+    font-family: var(--Poly);
+}
+
+    header h6,
+    h1 {
+        font-family: var(--Julius);
+    }
+
+    header .navbar-brand {
+        font-size: 2.5em;
+        padding-left: 2em;
+        /* min-width: 7em; */
+    }
+
+        header .navbar-brand:hover {
+            text-decoration: underline;
+            color: white;
+        }
+
+    header .nav-item:last-child {
+        padding-right: 10em;
+    }
+
+    header .nav-item {
+        padding: 0 0 0 4em;
+    }
+
+    header .nav-link:hover {
+        /* border-bottom: 3px solid black; */
+        text-decoration: underline;
+        color: white;
+        /* padding-top: 3px; */
+    }
+
+    header .row .col-md-5 {
+        padding: 4vmin 1vmin;
+    }
+
+    header .row .col-md-7 {
+        padding: 22vmin 1vmin;
+        padding-bottom: 35vmin;
+        color: white;
+    }
+
+#svgLogo {
+    /* position: absolute; */
+}
+
+header .container .col-md-7 h6 {
+    letter-spacing: 4px;
+}
+
+header .container .col-md-7 h1 {
+    font-size: 6vmin;
+    font-weight: bold;
+    padding: 0.1em 0em;
+}
+
+header .container .col-md-7 p {
+    padding: 1vmin 5vmin;
+    font-size: 1.2em;
+}
+
+header .container .col-md-7 button {
+    border-radius: 30px;
+    font-size: 1.5em;
+    font-family: var(--Mandali);
+    border-color: #ffffff;
+    border-width: 2px;
+    color: white;
+}
+
+    header .container .col-md-7 button:hover {
+        border-color: #dc3545;
+    }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 160px;
+    box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        color: #dc3545;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .dropdown-content a:hover {
+            background: #ddd;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Section-1 */
+
+.section-1 {
+    padding: 20vmin 0;
+    font-family: var(--Poly);
+    font-size: 1.1em;
+}
+
+    .section-1 .row .col-md-6 .tiger img {
+        opacity: 0.8;
+        width: 100%;
+        border-radius: 0.2em;
+    }
+
+    .section-1 .row .col-md-6:last-child {
+        position: relative;
+    }
+
+    .section-1 .row .col-md-6 .panel {
+        position: absolute;
+        top: 7vmin;
+        left: -10vmin;
+        background: white;
+        border-radius: 3px;
+        text-align: left;
+        padding: 13vmin 5vmin 20vmin 10vmin;
+        box-shadow: 0px 25px 42px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-1 .row .col-md-6 .panel h1 {
+    font-weight: bold;
+    font-size: 3em;
+    }
+
+/* section 4 */
+
+.section-4 .container h1 {
+    font-size: 6vmin;
+    padding-top: 14vmin;
+}
+
+.section-4 .team {
+    padding: 10vmin 4vmin;
+}
+
+.section-4 .card {
+    width: 30rem;
+    margin-top: 0vmin;
+    max-height: 550px;
+}
+
+    .section-4 .card .card-text {
+        padding: 0.5em;
+    }
+
+    .section-4 .card .card-body > a {
+        font-size: 1.5em;
+    }
+
+.repair {
+    padding-top: 2em;
+    margin-bottom: 4em;
+    max-width: 40%;
+    max-height: 40%;
+}
+
+/* Footer */
+
+footer {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 8vmin;
+}
+
+    footer p > span {
+        color: #dc3545;
+    }
+
+    footer input {
+        border: none !important;
+        color: #dc3545 !important;
+    }
+
+        footer input::placeholder {
+            color: #dc3545 !important;
+        }
+
+    footer .input-group .input-group-text {
+        color: #dc3545;
+        border-radius: 0 50% 50% 0 !important;
+    }
+
+    footer .column i {
+        color: #dc3545;
+        padding-right: 20px;
+    }
+
+
+
+/* 
+background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+ background-image: linear-gradient(to bottom, #bb2121, #d3564f, #e6827d, #f5adab, #ffd8d8);
+*/
+
+
+/* SVG Animation draw */
+
+#Logo {
+    height: 900px;
+    fill: #aa7f3d;
+    fill: url("#MyGradient");
+    stroke: #EEBE7B;
+    stroke-miterlimit: 5;
+}
+
+.Animate-Mech {
+    fill-opacity: 0;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-name: DrawLine, FadeStroke, FillIn;
+    animation-duration: 4s, 1s, 1s;
+    animation-delay: 0s, 3.5s, 3.5s;
+}
+
+.Animate-Octo-Outside {
+    fill-opacity: 0;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    stroke-width: 5;
+    animation-name: DrawLine, FillIn;
+    animation-duration: 4s, 1s, 1s;
+    animation-delay: 0.5s, 3.5s, 3.5s;
+}
+
+.Animate-Octo-Inside {
+    fill-opacity: 0;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    stroke-width: 5;
+    animation-name: DrawLine;
+    animation-duration: 3s, 1s, 1s;
+    animation-delay: 0s, 3.5s, 3.5s;
+}
+
+.Animate-v-outside {
+    fill-opacity: 0;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    stroke-width: 5;
+    animation-name: DrawLine, FillIn;
+    animation-duration: 3s, 1s, 1s;
+    animation-delay: 0s, 3.5s, 3.5s;
+}
+
+.Animate-v-inside {
+    fill-opacity: 0;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    stroke-width: 5;
+    animation-name: DrawLine;
+    animation-duration: 3s, 1s, 1s;
+    animation-delay: 0.5s, 3.5s, 3.5s;
+}
+
+#Draw-Octo {
+    stroke-dashArray: 2000;
+    stroke-dashoffset: 2000;
+}
+
+#Draw-V {
+    /* animation-delay: 1s, 3.5s, 3.5s;
+    animation-duration: 2s, 1s, 1s;  */
+    stroke-dashArray: 2000;
+    stroke-dashoffset: -2000;
+}
+
+#Draw-Mech {
+    animation-delay: 0.5s, 2.5s, 2.5s;
+    animation-duration: 2s, 1s, 1s;
+    /* stroke-dashArray: 430;
+    stroke-dashoffset: 430; */
+    stroke-dashArray: 666;
+    stroke-dashoffset: 666;
+}
+
+@keyframes DrawLine {
+    to {
+        stroke-dashOffset: 0;
+    }
+}
+
+@keyframes FadeStroke {
+    to {
+        stroke-opacity: 0;
+    }
+}
+
+@keyframes FillIn {
+    from {
+        fill-opacity: 0;
+    }
+
+    to {
+        fill-opacity: 1;
+    }
+}
+
+/* SVG Animation draw */
+
+/* Media Queries */
+
+@media only screen and (max-width: 991px) {
+    header .navbar-brand {
+        padding-left: 1rem;
+    }
+
+    .section-1 .row .col-md-6 .panel h1 {
+        font-size: 2em;
+    }
+
+    .section-4 .team {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        margin-left: -44%;
+    }
+
+    .section-4 .card {
+        min-width: 200% !important;
+        max-height: 100%;
+        margin-top: 5em;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+
+
+    .section-4 .card {
+        width: 80%;
+    }
+
+    header .navbar-brand {
+        min-width: 7em;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+
+    .section-4 .team {
+        display: initial;
+        flex-direction: initial;
+        align-content: initial;
+        margin-left: initial;
+    }
+
+    .section-4 .card {
+        min-width: initial !important;
+        max-height: initial;
+        /* margin-top: initial; */
+        width: initial;
+    }
+
+    .section-4 {
+        padding-top: 70%;
+    }
+
+    .section-1 {
+        padding-top: 130%;
+    }
+
+        .section-1 .row .col-md-6 .panel {
+            left: 0vmin;
+        }
+
+    footer .row .col-md-2 {
+        margin-top: 5vmin;
+    }
+
+    header .navbar-brand {
+        min-width: 0em;
+    }
+}
+
+/* Media Queries */
+
+.bg-table {
+    background-color: #dcdde1;
+    border-radius: 2% 2% 0 0 !important;
+    box-shadow: 0px 25px 42px rgba(0, 0, 0, 0.8);
+}
+
+.thead {
+
+}
+
+.tableme {
+    font-family: var(--Sawarabi);
+    background: #4b6584;
+    border-radius: 0.25em;
+    border-collapse: collapse;
+    margin: 1em;
+}
+
+th {
+    border-bottom: 1px solid #364043;
+    color: #E2B842;
+    font-size: 0.85em;
+    font-weight: 600;
+    padding: 0.5em 1em;
+    text-align: left;
+}
+
+td {
+    color: #fff;
+    font-weight: 400;
+    padding: 0.65em 1em;
+}
+
+.disabled td {
+    color: #4F5F64;
+}
+
+tbody tr {
+    transition: background 0.25s ease;
+}
+
+tbody tr:hover {
+    background: #014055;
+}
+
+h2 {
+    font-family: var(--Mandali);
+}
+.bg-fixed {
+    /*background-color: var(--gradiant);*/
+    top: 0;
+    min-height: 100vh;
+}
+
+.text-normal {
+    font-family: var(--Sawarabi);
 }

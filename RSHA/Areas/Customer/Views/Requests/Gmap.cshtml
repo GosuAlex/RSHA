@@ -11,6 +11,18 @@
 {
     <p>@item</p>
 }
+<br /> <br />   <br />  <br />     <br />
+@foreach (var item in Model)
+{
+    //string[] splittedItems = item.Split("*");
+    //string pos = splittedItems[0];
+    //string name = splittedItems[1];
+    //<p>@pos</p> <p>@name</p>
+    string splittedItems;
+    splittedItems = item;
+    <p>@splittedItems</p>
+}
+
 
 <div id="map" style="height:800px; width:100%;"></div>
 
@@ -41,8 +53,8 @@
 
             var marker = new google.maps.Marker({ position: { lat: 60, lng: 9 }, icon: 'http://maps.google.com/mapfiles/kml/shapes/mechanic.png', map: map });
             var marker = new google.maps.Marker({ position: pos, icon: 'http://maps.google.com/mapfiles/kml/shapes/man.png', map: map });
-          
-          
+
+
           var marker = new google.maps.Marker({
             position: { lat: 60, lng: 9 },
             icon: {
@@ -52,8 +64,8 @@
             label: { color: '#000000', fontWeight: 'bold', fontSize: '18px', text: 'Tetsetse testttes' },
             map: map
         });
-     
-     
+
+
      */
     // Google map
 
@@ -68,32 +80,43 @@
         });
 
         // Populate markers
-        
+
        @foreach (var item in Model)
-        {
+       {
+           string[] splittedItems = item.Split("*");
+           string pos = splittedItems[0];
+           string name = splittedItems[1];
             <text>
-                addMarker(@item);
+                addMarker(pos, name);
             </text>
         }
-        
+
         var marker = new google.maps.Marker({
             position: { lat: 60, lng: 9 },
             icon: {
-                url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                 labelOrigin: new google.maps.Point(15, 40),
             },
             label: { color: '#000000', fontWeight: 'bold', fontSize: '18px', text: 'Tetsetse testttes' },
             map: map
         });
 
-        function addMarker(pos) {
-            var marker = new google.maps.Marker({ position: pos, map: map });
+        function addMarker(pos, name) {
+            var mechMarker = new google.maps.Marker({
+                position: pos,
+                icon: {
+                    url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                    labelOrigin: new google.maps.Point(15, 40),
+                },
+                label: { color: '#000000', fontWeight: 'bold', fontSize: '18px', text: name },
+                map: map
+            });
         }
 
         // Mark User Icon
 
         function addUserMarker(pos) {
-            var marker = new google.maps.Marker({ position: pos, icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', map: map });
+            var userMarker = new google.maps.Marker({ position: pos, icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', map: map });
         }
 
         // HTML5 GeoLocation

@@ -196,15 +196,14 @@ namespace RSHA.Areas.Customer.Controllers
 
             var mechanics = await _db.Mechanics.ToListAsync();
 
+            //string[] mechanicHouses = new string[] { "{ lat: 59, lng: 10 }", "{ lat: 59, lng: 11 }" };
+            string[] mechanicHouses = new string[5];
+
             foreach (var item in mechanics)
             {
-                item.Name
-                item.Latitude
-                item.Longitude
+                string itemInString = "{ lat: " + item.Latitude + ", lng: " + item.Longitude + " }*" + item.Name;
+                mechanicHouses.Append(itemInString);
             }
-
-
-            string[] mechanicHouses = new string[] { "{ lat: 59, lng: 10 }", "{ lat: 59, lng: 11 }" };
 
             return View(mechanicHouses);
         }

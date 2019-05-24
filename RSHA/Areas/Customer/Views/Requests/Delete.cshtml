@@ -4,105 +4,113 @@
     ViewData["Title"] = "Delete Request";
 }
 
-<br />
-<h2 class="text-info">Delete Request</h2>
+<div class="bg-fixed">
+
+    <br /><br />
+    <div class="container bg-table border border-dark text-normal">
+        <br /><br />
+        <h2 class="text-info">Delete Request</h2> <br />
 
 
-<form method="POST">
-    <div class="p-4 border rounded">
-        <input hidden asp-for="Requests.Id" />
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.FirstName"></label>
+        <form method="POST">
+            <div class="p-4 border rounded">
+                <input hidden asp-for="Requests.Id" />
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.FirstName"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.FirstName" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.LastName"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.LastName" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.PhoneNumber"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.PhoneNumber" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.Location"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.Location" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.CarModel"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.CarModel" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.CarLicensePlate"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.CarLicensePlate" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="ProblemTypes"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.ProblemTypes.Name" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.Message"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.Message" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.RequestScheduledDate"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.RequestScheduledDate" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.MechanicAssigned"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.MechanicAssigned" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.Completed"></label>
+                    </div>
+                    <div class="col-5">
+                        <input type="checkbox" asp-for="Requests.Completed" disabled class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <input type="submit" class="btn btn-danger" value="Delete" />
+                    <a asp-action="Index" class="btn btn-success">Back to overview</a>
+                </div>
             </div>
-            <div class="col-5">
-                <input asp-for="Requests.FirstName" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.LastName"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.LastName" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.PhoneNumber"></label>
-            </div>
-            <div class="col-3">
-                <input asp-for="Requests.PhoneNumber" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.Location"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.Location" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.CarModel"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.CarModel" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.CarLicensePlate"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.CarLicensePlate" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="ProblemTypes"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.ProblemTypes.Name" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.Message"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.Message" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.RequestScheduledDate"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.RequestScheduledDate" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.MechanicAssigned"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.MechanicAssigned" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.Completed"></label>
-            </div>
-            <div class="col-5">
-                <input type="checkbox" asp-for="Requests.Completed" disabled class="form-control" />
-            </div>
-        </div>
-        <br />
-        <div class="form-group">
-            <input type="submit" class="btn btn-danger" value="Delete" />
-            <a asp-action="Index" class="btn btn-success">Back to overview</a>
-        </div>
+
+        </form>
     </div>
-</form>
+</div>
+</header>

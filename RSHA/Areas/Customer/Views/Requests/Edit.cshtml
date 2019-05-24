@@ -4,162 +4,168 @@
     ViewData["Title"] = "Edit Request";
 }
 
-<br />
-<h2 class="text-info">Edit Request</h2>
+<div class="bg-fixed">
+    <br /><br />
+    <div class="container bg-table border border-dark text-normal">
+        <br /><br />
+        <h2 class="text-info">Edit Request</h2>
 
 
-<form method="POST">
-    <div class="p-4 border rounded">
-        <input hidden asp-for="Requests.Id" />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.FirstName"></label>
+        <form method="POST">
+            <div class="p-4 border rounded">
+                <input hidden asp-for="Requests.Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.FirstName"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.FirstName" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Requests.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.LastName"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.LastName" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Requests.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.PhoneNumber"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.PhoneNumber" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Requests.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.Location"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.Location" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Requests.Location" class="text-danger"></span>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.CarModel"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.CarModel" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.CarLicensePlate"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.CarLicensePlate" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="ProblemTypes"></label>
+                    </div>
+                    <div class="col-10">
+                        <select asp-for="@Model.Requests.ProblemId" asp-items="Model.ProblemTypes.ToSelectListItems(Model.Requests.ProblemId)" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.Message"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.Message" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label>Schedule date</label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.RequestScheduledDate" type="text" id="datepicker" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label>Schedule time</label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.RequestScheduledTime" type="text" id="timepicker" class="form-control timepicker" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.MechanicAssigned"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Requests.MechanicAssigned" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Requests.Completed"></label>
+                    </div>
+                    <div class="col-5">
+                        <input type="checkbox" asp-for="Requests.Completed" disabled class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Update" />
+                    <a asp-action="Index" class="btn btn-success">Back to overview</a>
+                </div>
             </div>
-            <div class="col-5">
-                <input asp-for="Requests.FirstName" class="form-control" />
-            </div>
-            <span asp-validation-for="Requests.FirstName" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.LastName"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.LastName" class="form-control" />
-            </div>
-            <span asp-validation-for="Requests.LastName" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.PhoneNumber"></label>
-            </div>
-            <div class="col-3">
-                <input asp-for="Requests.PhoneNumber" class="form-control" />
-            </div>
-            <span asp-validation-for="Requests.PhoneNumber" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.Location"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.Location" class="form-control" />
-            </div>
-            <span asp-validation-for="Requests.Location" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.CarModel"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.CarModel" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.CarLicensePlate"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.CarLicensePlate" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="ProblemTypes"></label>
-            </div>
-            <div class="col-5">
-                <select asp-for="@Model.Requests.ProblemId" asp-items="Model.ProblemTypes.ToSelectListItems(Model.Requests.ProblemId)" class="form-control"></select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.Message"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.Message" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label>Schedule date</label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.RequestScheduledDate" type="text" id="datepicker" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label>Schedule time</label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.RequestScheduledTime" type="text" id="timepicker" class="form-control timepicker" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.MechanicAssigned"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Requests.MechanicAssigned" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Requests.Completed"></label>
-            </div>
-            <div class="col-5">
-                <input type="checkbox" asp-for="Requests.Completed" disabled class="form-control" />
-            </div>
-        </div>
-        <br />
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Update" />
-            <a asp-action="Index" class="btn btn-success">Back to overview</a>
-        </div>
+        </form>
     </div>
-</form>
+</div>
+</header>
 
-@section Scripts{
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        @section Scripts{
+            @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script>
-        $('.timepicker').timepicker({
-            timeFormat: 'HH:mm',
-            interval: 30,
-            minTime: '0',
-            maxTime: '23:30',
-            startTime: '0',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
+            <script>
+                $('.timepicker').timepicker({
+                    timeFormat: 'HH:mm',
+                    interval: 30,
+                    minTime: '0',
+                    maxTime: '23:30',
+                    startTime: '0',
+                    dynamic: false,
+                    dropdown: true,
+                    scrollbar: true
+                });
 
-        $(function () {
-            $("#datepicker").datepicker({
-                minDate: +0, maxDate: "+3m", dateFormat: "dd-mm-yy", showAnim: "fadeIn"
-            });
-        });
+                $(function () {
+                    $("#datepicker").datepicker({
+                        minDate: +0, maxDate: "+3m", dateFormat: "dd-mm-yy", showAnim: "fadeIn"
+                    });
+                });
 
-        $(document).ready(function () {
-            var appointmentTime = document.getElementById('datepicker').value;
-            var splitData = "";
+                $(document).ready(function () {
+                    var appointmentTime = document.getElementById('datepicker').value;
+                    var splitData = "";
 
-            if (appointmentTime.indexOf(" ") > 0) {
-                splitData = appointmentTime.split(" ");
-            }
-            else {
-                splitData = appointmentTime.split("T");
-            }
+                    if (appointmentTime.indexOf(" ") > 0) {
+                        splitData = appointmentTime.split(" ");
+                    }
+                    else {
+                        splitData = appointmentTime.split("T");
+                    }
 
-            var time = splitData[1].substring(0, 5);
-            if (time.slice(-1) == ":") {
-                time = time.substring(0, time.length - 1);
+                    var time = splitData[1].substring(0, 5);
+                    if (time.slice(-1) == ":") {
+                        time = time.substring(0, time.length - 1);
 
-            }
+                    }
 
-            $('#datepicker').attr('value', splitData[0]);
-            $('#timepicker').attr('value', time);
-        });
-    </script>
-}
+                    $('#datepicker').attr('value', splitData[0]);
+                    $('#timepicker').attr('value', time);
+                });
+            </script>
+        }
