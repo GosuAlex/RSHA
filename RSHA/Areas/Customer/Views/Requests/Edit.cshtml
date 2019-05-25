@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit Request";
 }
 
-<div class="bg-fixed">
+<div class="bg-md-fixed">
     <br /><br />
     <div class="container bg-table border border-dark text-normal">
         <br /><br />
@@ -14,6 +14,7 @@
         <form method="POST">
             <div class="p-4 border rounded">
                 <input hidden asp-for="Requests.Id" />
+                <input hidden asp-for="Requests.MechanicAssigned" />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group row">
                     <div class="col-2">
@@ -101,10 +102,10 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-2">
-                        <label asp-for="Requests.MechanicAssigned"></label>
+                        <label>Mechanic</label>
                     </div>
                     <div class="col-10">
-                        <input asp-for="Requests.MechanicAssigned" readonly class="form-control" />
+                        <label readonly class="form-control">@ViewBag.mechName</label>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -124,48 +125,50 @@
         </form>
     </div>
 </div>
+<br /><br />
 </header>
 
-        @section Scripts{
-            @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-            <script>
-                $('.timepicker').timepicker({
-                    timeFormat: 'HH:mm',
-                    interval: 30,
-                    minTime: '0',
-                    maxTime: '23:30',
-                    startTime: '0',
-                    dynamic: false,
-                    dropdown: true,
-                    scrollbar: true
-                });
+    <script>
+        $('.timepicker').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '0',
+            maxTime: '23:30',
+            //defaultTime: 'now',
+            startTime: '0',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
 
-                $(function () {
-                    $("#datepicker").datepicker({
-                        minDate: +0, maxDate: "+3m", dateFormat: "dd-mm-yy", showAnim: "fadeIn"
-                    });
-                });
+        $(function () {
+            $("#datepicker").datepicker({
+                minDate: +0, maxDate: "+3m", dateFormat: "dd-mm-yy", showAnim: "fadeIn"
+            });
+        });
 
-                $(document).ready(function () {
-                    var appointmentTime = document.getElementById('datepicker').value;
-                    var splitData = "";
+        $(document).ready(function () {
+            var appointmentTime = document.getElementById('datepicker').value;
+            var splitData = "";
 
-                    if (appointmentTime.indexOf(" ") > 0) {
-                        splitData = appointmentTime.split(" ");
-                    }
-                    else {
-                        splitData = appointmentTime.split("T");
-                    }
+            if (appointmentTime.indexOf(" ") > 0) {
+                splitData = appointmentTime.split(" ");
+            }
+            else {
+                splitData = appointmentTime.split("T");
+            }
 
-                    var time = splitData[1].substring(0, 5);
-                    if (time.slice(-1) == ":") {
-                        time = time.substring(0, time.length - 1);
+            var time = splitData[1].substring(0, 5);
+            if (time.slice(-1) == ":") {
+                time = time.substring(0, time.length - 1);
 
-                    }
+            }
 
-                    $('#datepicker').attr('value', splitData[0]);
-                    $('#timepicker').attr('value', time);
-                });
-            </script>
-        }
+            $('#datepicker').attr('value', splitData[0]);
+            $('#timepicker').attr('value', time);
+        });
+    </script>
+}

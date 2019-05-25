@@ -13,9 +13,12 @@ using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using RSHA.Functions;
+using RSHA.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RSHA.Areas.Mechanic.Controllers
 {
+    [Authorize(Roles = StaticDetails.MechanicEndUser)]
     [Area("Mechanic")]
     public class ReceivedRequestsController : Controller
     {

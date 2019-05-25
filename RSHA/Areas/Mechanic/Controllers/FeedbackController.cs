@@ -3,25 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RSHA.Data;
 using RSHA.Models;
+using RSHA.Models.ViewModels;
+using RSHA.Utilities;
 
 namespace RSHA.Areas.Mechanic.Controllers
 {
+    [Authorize(Roles = StaticDetails.MechanicEndUser)]
     [Area("Mechanic")]
     public class FeedbackController : Controller
     {
         private readonly ApplicationDbContext _db;
 
         [BindProperty]
-        public Feedbacks Feedback { get; set; }
+        public FeedbacksViewModel FeedbacksVM { get; set; }
 
         public FeedbackController(ApplicationDbContext db)
         {
             _db = db;
-            Feedback = new Models.Feedbacks();
+            FeedbacksVM = new FeedbacksViewModel()
+            {
+                Feedbacks = _db.Feedbacks.ToList(),
+                Feedback = new Models.Feedbacks()
+            };
         }
 
         // INDEX Action Method      --------------------------------    INDEX
@@ -29,11 +37,14 @@ namespace RSHA.Areas.Mechanic.Controllers
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            //var feedbacks = _db.Feedbacks.Where(f => f.UserId == id).OrderBy(p => EF.Property<object>(p, sortColumn));
-            var feedback = _db.Feedbacks.Where(f => f.UserId == id);
+            var feedbacks = _db.Feedbacks.Where(f => f.UserId == id);
+            FeedbacksVM.Feedbacks = await Task.FromResult(feedbacks.ToList());
 
-            //return View(await feedback.ToListAsync());
-            return View();
+            //List<Feedbacks> test = await Task.FromResult(feedbacks.ToList());
+            //FeedbacksVM.Feedbacks = test;
+
+            //return View(await feedbacks.ToListAsync());
+            return View(FeedbacksVM);
         }
 
         // POST Create Action Method
@@ -46,13 +57,13 @@ namespace RSHA.Areas.Mechanic.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            Feedback.FeedbackCreated = DateTime.Now;
+            FeedbacksVM.Feedback.FeedbackCreated = DateTime.Now;
 
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Feedback.UserId = id;
-            Feedback.SenderName = User.Identity.Name;
+            FeedbacksVM.Feedback.UserId = id;
+            FeedbacksVM.Feedback.SenderName = User.Identity.Name;
 
-            _db.Feedbacks.Add(Feedback);
+            _db.Feedbacks.Add(FeedbacksVM.Feedback);
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

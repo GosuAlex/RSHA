@@ -1,4 +1,5 @@
-﻿@{
+﻿@using RSHA.Utilities;
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -10,12 +11,24 @@
             <p>
                 Use this bitch web-application to find and set an appointment to your local mechanic workshop.
             </p>
-            <button class="btn btn-outline-danger px-5 py-2">Start</button>
+            @if (User.IsInRole(StaticDetails.MechanicEndUser))
+            {
+                <a class="button btn btn-outline-danger px-5 py-2" asp-area="Mechanic" asp-controller="ReceivedRequests" asp-action="Index">Start</a>
+            }
+            else if (!User.IsInRole(StaticDetails.MechanicEndUser) && User.Identity.IsAuthenticated)
+            {
+                <a class="button btn btn-outline-danger px-5 py-2" asp-area="Customer" asp-controller="Requests" asp-action="Locate">Start</a>
+            }
+            else
+            {
+                <a class="button btn btn-outline-danger px-5 py-2" href="/Identity/Account/Login">Start</a>
+            }
         </div>
         <div class="col-md-5 col-sm-12 h-25">
 
             <!-- SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG -->
 
+            <div class="pushdownsvg"></div>
             <div id="svgLogo">
                 <svg id="Logo-Defs" class="size" version="1.2" baseProfile="tiny"
                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -64,7 +77,19 @@
 
 
 
+
+
+
+
                 <use id="Draw-Octo" class="Animate-Octo-Outside" xlink:href="#octo-inside" />
+
+
+
+
+
+
+
+
 
 
 
@@ -76,6 +101,10 @@
 
 
 
+
+
+
+
                 <use id="Draw-V" class="Animate-v-inside" xlink:href="#v-inside" />
 
 
@@ -84,7 +113,19 @@
 
 
 
+
+
+
+
+
+
+
+
                 <use id="Draw-Mech" class="Animate-Mech" xlink:href="#Mech" />
+
+
+
+
 
 
 

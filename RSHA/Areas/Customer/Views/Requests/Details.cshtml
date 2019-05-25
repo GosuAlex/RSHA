@@ -3,7 +3,7 @@
     ViewData["Title"] = "Request Details";
 }
 
-<div class="bg-fixed">
+<div class="bg-md-fixed">
     <br /><br />
     <div class="container bg-table border border-dark text-normal">
         <br /><br />
@@ -72,7 +72,7 @@
                     <label asp-for="Requests.Message"></label>
                 </div>
                 <div class="col-10">
-                    <input asp-for="Requests.Message" readonly class="form-control"/>
+                    <input asp-for="Requests.Message" readonly class="form-control" />
                 </div>
             </div>
             <div class="form-group row">
@@ -93,10 +93,10 @@
             </div>
             <div class="form-group row">
                 <div class="col-2">
-                    <label asp-for="Requests.MechanicAssigned"></label>
+                    <label>Mechanic</label>
                 </div>
                 <div class="col-10">
-                    <input asp-for="Requests.MechanicAssigned" readonly class="form-control" />
+                    <label readonly class="form-control">@ViewBag.mechName</label>
                 </div>
             </div>
             <div class="form-group row">
@@ -115,29 +115,30 @@
         </div>
     </div>
 </div>
+<br /><br />
 </header>
-        @section Scripts{
+@section Scripts{
 
-            <script>
-                $(document).ready(function () {
-                    var appointmentTime = document.getElementById('datepicker').value;
-                    var splitData = "";
+    <script>
+        $(document).ready(function () {
+            var appointmentTime = document.getElementById('datepicker').value;
+            var splitData = "";
 
-                    if (appointmentTime.indexOf(" ") > 0) {
-                        splitData = appointmentTime.split(" ");
-                    }
-                    else {
-                        splitData = appointmentTime.split("T");
-                    }
+            if (appointmentTime.indexOf(" ") > 0) {
+                splitData = appointmentTime.split(" ");
+            }
+            else {
+                splitData = appointmentTime.split("T");
+            }
 
-                    var time = splitData[1].substring(0, 5);
-                    if (time.slice(-1) == ":") {
-                        time = time.substring(0, time.length - 1);
+            var time = splitData[1].substring(0, 5);
+            if (time.slice(-1) == ":") {
+                time = time.substring(0, time.length - 1);
 
-                    }
+            }
 
-                    $('#datepicker').attr('value', splitData[0]);
-                    $('#timepicker').attr('value', time);
-                });
-            </script>
-        }
+            $('#datepicker').attr('value', splitData[0]);
+            $('#timepicker').attr('value', time);
+        });
+    </script>
+}

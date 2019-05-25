@@ -167,6 +167,10 @@ header {
         color: white;
     }
 
+#navbar {
+    z-index:9999;
+}
+
 #svgLogo {
     /* position: absolute; */
 }
@@ -186,7 +190,7 @@ header .container .col-md-7 p {
     font-size: 1.2em;
 }
 
-header .container .col-md-7 button {
+header .container .col-md-7 .button {
     border-radius: 30px;
     font-size: 1.5em;
     font-family: var(--Mandali);
@@ -195,7 +199,7 @@ header .container .col-md-7 button {
     color: white;
 }
 
-    header .container .col-md-7 button:hover {
+    header .container .col-md-7 .button:hover {
         border-color: #dc3545;
     }
 
@@ -330,7 +334,7 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
 /* SVG Animation draw */
 
 #Logo {
-    height: 900px;
+    height: 800px;
     fill: #aa7f3d;
     fill: url("#MyGradient");
     stroke: #EEBE7B;
@@ -433,6 +437,43 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
 
 /* Media Queries */
 
+@media only screen and (max-width: 1500px) {
+
+    .section-4 .card {
+        width: 80%;
+    }
+
+    header .navbar-brand {
+        min-width: 7em;
+    }
+}
+
+@media only screen and (max-width: 1273px) {
+
+    .navbar {
+        font-size:0.8em;
+    }
+}
+
+@media only screen and (max-width: 1038px) {
+
+    .navbar {
+        font-size: 0.7em;
+    }
+
+}
+
+@media only screen and (min-width: 992px) {
+
+    .login {
+        display: block;
+    }
+
+    .login-sm {
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 991px) {
     header .navbar-brand {
         padding-left: 1rem;
@@ -454,18 +495,17 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
         max-height: 100%;
         margin-top: 5em;
     }
-}
 
-@media only screen and (max-width: 1500px) {
-
-
-    .section-4 .card {
-        width: 80%;
+    .login {
+        display: none;
     }
 
-    header .navbar-brand {
-        min-width: 7em;
+    .login-sm {
+        display: block;
+        margin-left: 45px;
+        font-size: 1.1em;
     }
+
 }
 
 @media only screen and (max-width: 767px) {
@@ -503,9 +543,14 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
     header .navbar-brand {
         min-width: 0em;
     }
+
+    .pushdown {
+        margin-top: 100px;
+    }
 }
 
 /* Media Queries */
+
 
 .bg-table {
     background-color: #dcdde1;

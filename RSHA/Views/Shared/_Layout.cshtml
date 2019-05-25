@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using RSHA.Utilities;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -32,7 +33,7 @@
         <div class="container-fluid p">
             <div class="nav-wrapper">
                 <nav id="navbar" class="navbar navbar-expand-lg">
-                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <a class="navbar-brand" asp-controller="../" asp-action="Index">
                         RSHA
                         <img class="icon" src="~/images/automobile-with-wrench.svg" alt="Icon Logo">
                     </a>
@@ -43,27 +44,37 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <div class="mr-auto"></div>
                         <ul class="navbar-nav">
-                            <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="Requests" asp-action="Create">New request</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="Requests" asp-action="Index">Requests overview</a></li>
-                            <li class="nav-item dropdown">
-                                <div class="dropdown">
-                                    <a class="nav-link" href="#">Find Mechanic</a>
-                                    <div class="dropdown-content">
-                                        <a class="nav-link" asp-area="Customer" asp-controller="Requests" asp-action="Locate">By List</a>
-                                        <a class="nav-link" asp-area="Customer" asp-controller="Requests" asp-action="Gmap">By Map</a>
+                            @if (!User.IsInRole(StaticDetails.MechanicEndUser) && User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="Requests" asp-action="Index">Requests overview</a></li>
+                                <li class="nav-item dropdown">
+                                    <div class="dropdown">
+                                        <a class="nav-link" asp-area="Customer" asp-controller="Requests" asp-action="Locate">Find Mechanic</a>
+                                        <div class="dropdown-content">
+                                            <a class="nav-link" asp-area="Customer" asp-controller="Requests" asp-action="Locate">By List</a>
+                                            <a class="nav-link" asp-area="Customer" asp-controller="Requests" asp-action="Gmap">By Map</a>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" asp-area="Mechanic" asp-controller="ReceivedRequests" asp-action="Index">Incoming requests</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-area="Mechanic" asp-controller="Feedback" asp-action="Index">Feedback</a></li>
+                                </li>
+                            }
+
+                            @if (User.IsInRole(StaticDetails.MechanicEndUser))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-area="Mechanic" asp-controller="ReceivedRequests" asp-action="Index">Incoming requests</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-area="Mechanic" asp-controller="Feedback" asp-action="Index">Feedback</a></li>
+                            }
                         </ul>
+                        <div class="login-sm">
+                            <partial name="_LoginPartial" />
+                        </div>
                     </div>
-                    <div>
+                    <div class="login">
                         <partial name="_LoginPartial" />
                     </div>
                 </nav>
             </div>
         </div>
+        <div class="pushdown"></div>
 
         @*<partial name="_CookieConsentPartial" />*@
 

@@ -1,5 +1,6 @@
 ﻿@*@model IEnumerable<RSHA.Models.Feedbacks>*@
-@model RSHA.Models.Feedbacks
+@*@{IEnumerable<RSHA.Models.Feedbacks> modelEnum = new List<RSHA.Models.Feedbacks> { Model };}*@
+@model RSHA.Models.ViewModels.FeedbacksViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,22 +23,23 @@
                           <div class="form-group">
                               <div class="">
                                   <h4>Send feedback to administrator</h4>
-                                  <label asp-for="Message"></label>
+                                  <label asp-for="Feedback.Message"></label>
                               </div>
                               <div class="">
-                                  <input asp-for="Message" class="form-control" />
+                                  @*<input asp-for="Feedback.Message" class="form-control" />*@
+                                  <textarea asp-for="Feedback.Message" class="form-control" style="height:8em;" /></textarea>
                               </div>
-                              <span asp-validation-for="Message" class="text-danger"></span>
+                              <span asp-validation-for="Feedback.Message" class="text-danger"></span>
                           </div>
                       </div>
                       <div asp-validation-summary="All" class="text-danger"></div>
                       <br />
                       <div class="form-group">
                           <input type="submit" class="btn btn-sub btn-sub-primary" value="Send" />
-                          <a asp-controller="Feedback" asp-action="Index" class="btn btn-sub btn-sub-success">Back</a>
+                          <a asp-controller="../" asp-action="Index" class="btn btn-sub btn-sub-success">Back</a>
                       </div>
                   </form>
-
+                  <br /><br />
               </div>
               <div class="col-12">
                   <table class="tableme" style="width: 97% ;">
@@ -47,15 +49,15 @@
                               Message time
                           </th>
                           <th>
-                              @Html.DisplayNameFor(m => m.Message)
+                              @Html.DisplayNameFor(m => m.Feedback.Message)
                           </th>
                       </tr>
 
-                      @foreach (var item in Model)
+                      @foreach (var item in Model.Feedbacks)
                       {
                           <tr class="tbody @{if (item.SenderName == User.Identity.Name)
-                            { <text>bg-successme</text> }
-                                else {<text>bg-secondaryme</text>} } ">
+                            { <text>bg-darkme</text> }
+                                else {<text>bg-successme </text>} } ">
                               <td>
                                   @Html.DisplayFor(m => item.FeedbackCreated)
                               </td>

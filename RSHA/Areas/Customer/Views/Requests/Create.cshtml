@@ -4,8 +4,8 @@
     ViewData["Title"] = "Create Request";
 }
 
-<div class="bg-fixed">
-    
+<div class="bg-md-fixed">
+
     <br /><br />
     <div class="container bg-table border border-dark text-normal">
         <br /><br />
@@ -21,7 +21,7 @@
                         <label asp-for="Requests.FirstName"></label>
                     </div>
                     <div class="col-10">
-                        <input asp-for="Requests.FirstName" class="form-control" />
+                        <input asp-for="Requests.FirstName" value="@ViewBag.userProfileInfo[3]" class="form-control" />
                     </div>
                     <span asp-validation-for="Requests.FirstName" class="text-danger"></span>
                 </div>
@@ -30,7 +30,7 @@
                         <label asp-for="Requests.LastName"></label>
                     </div>
                     <div class="col-10">
-                        <input asp-for="Requests.LastName" class="form-control" />
+                        <input asp-for="Requests.LastName" value="@ViewBag.userProfileInfo[4]" class="form-control" />
                     </div>
                     <span asp-validation-for="Requests.LastName" class="text-danger"></span>
                 </div>
@@ -39,7 +39,8 @@
                         <label asp-for="Requests.PhoneNumber"></label>
                     </div>
                     <div class="col-10">
-                        <input asp-for="Requests.PhoneNumber" class="form-control" />
+                        <input asp-for="Requests.PhoneNumber" value="@ViewBag.userProfileInfo[2]" min="0" max="2000000000" class="form-control" />
+                        @*<input asp-for="Requests.PhoneNumber"  class="form-control" />*@
                     </div>
                     <span asp-validation-for="Requests.PhoneNumber" class="text-danger"></span>
                 </div>
@@ -48,16 +49,15 @@
                         <label asp-for="Requests.Location"></label>
                     </div>
                     <div class="col-10">
-                        <input asp-for="Requests.Location" class="form-control" />
+                        <input asp-for="Requests.Location" placeholder="Need a tow truck?" class="form-control" />
                     </div>
-                    <span asp-validation-for="Requests.Location" class="text-danger"></span>
                 </div>
                 <div class="form-group row">
                     <div class="col-2">
                         <label asp-for="Requests.CarModel"></label>
                     </div>
                     <div class="col-10">
-                        <input asp-for="Requests.CarModel" class="form-control" />
+                        <input asp-for="Requests.CarModel" value="@ViewBag.userProfileInfo[0]" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -65,7 +65,7 @@
                         <label asp-for="Requests.CarLicensePlate"></label>
                     </div>
                     <div class="col-10">
-                        <input asp-for="Requests.CarLicensePlate" class="form-control" />
+                        <input asp-for="Requests.CarLicensePlate" value="@ViewBag.userProfileInfo[1]" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -82,7 +82,15 @@
                     </div>
                     <div class="col-10">
                         @*<input asp-for="Requests.Message" class="form-control" />*@
-                        <textarea asp-for="Requests.Message" class="form-control" /></textarea>
+                        <textarea asp-for="Requests.Message" class="form-control" style="height:8em;" /></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label>Mechanic</label>
+                    </div>
+                    <div class="col-10">
+                        <label readonly class="form-control">@ViewBag.mechName</label>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -111,33 +119,49 @@
         </form>
     </div>
 </div>
+<br /><br />
     </header>
-    @section Scripts{
-        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-        <script>
+    <script>
+        /**
+        var valueInDatepicker = null;
+        var dateChanged = document.querySelector('#datepicker');
 
-            var currentTime = new Date();
-            var currentTimeHours = currentTime.getHours();
-            //var currentTimeHours = currentTimeHours + 3;
+        dateChanged.addEventListener('change', (event) => {
+            var valueInDatepicker = document.querySelector('#datepicker');
+            valueInDatepicker.textContent = `${event.target.value}`;
+        });
 
-            $('.timepicker').timepicker({
-                timeFormat: 'HH:mm',
-                interval: 30,
-                //minTime: '0',
-                minTime: "'" + currentTimeHours + "'",
-                maxTime: '23:30',
-                defaultTime: 'now',
-                startTime: '0',
-                dynamic: false,
-                dropdown: true,
-                scrollbar: true
+        var currentDate = new Date();
+        var currentHours = currentDate.getHours();
+
+        var currentDateFormatted = (currentDate.getDate() + "-" + currentDate.getMonth() + "-" + currentDate.getFullYear());
+        if (currentDateFormatted = valueInDatepicker) {
+            minTimeValue = currentHours;
+        }
+        else {
+            minTimeValue = 0;
+        }
+        */
+        $('.timepicker').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '0',
+            //minTime: "'" + minTimeValue + "'",
+            maxTime: '23:30',
+            defaultTime: 'now',
+            startTime: '0',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $(function () {
+            $("#datepicker").datepicker({
+                minDate: +0, maxDate: "+3m", dateFormat: "dd-mm-yy", showAnim: "fadeIn"
             });
-
-            $(function () {
-                $("#datepicker").datepicker({
-                    minDate: +0, maxDate: "+3m", dateFormat: "dd-mm-yy", showAnim: "fadeIn"
-                });
-            });
-        </script>
-    }
+        });
+    </script>
+}

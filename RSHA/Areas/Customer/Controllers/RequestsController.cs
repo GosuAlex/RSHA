@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RSHA.Data;
 using RSHA.Models;
 using RSHA.Models.ViewModels;
+using RSHA.Utilities;
 
 namespace RSHA.Areas.Customer.Controllers
 {
+    //[Authorize(Roles = StaticDetails.CustomerEndUser)]
     [Area("Customer")]
     public class RequestsController : Controller
     {
@@ -45,25 +48,56 @@ namespace RSHA.Areas.Customer.Controllers
         // GET Create Action Method --------------------------------    CREATE
         public IActionResult Create(int id)
         {
+            var mech = _db.Mechanics.Find(id);
+            string mechName = mech.Name;
+             
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _db.ApplicationUser.Find(userId);
+            //string userCarModel = user.CarModel;
+            //string userCarLicensePlate = user.CarLicensePlate;
+            //string userPhoneNumber = user.PhoneNumber;
+            //string userFirstName = user.FirstName;
+            //string userLastName = user.LastName;
+            
+            List<string> userProfileInfo = new List<string>();
+            userProfileInfo.AddRange(new List<string>
+            {
+                new string(user.CarModel),
+                new string(user.CarLicensePlate),
+                new string(user.PhoneNumber),
+                new string(user.FirstName),
+                new string(user.LastName)
+            });
+            //string test = userProfileInfo[0];
+
+            ViewBag.userProfileInfo = userProfileInfo;
+            ViewBag.mechName = mechName;
             ViewBag.id = id;
+
             return View(RequestsVM);
         }
 
         // POST Create Action Method
         [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatePOST()
+        public async Task<IActionResult> CreatePOST(int? id)
         {
             if (!ModelState.IsValid)
             {
-                return View(RequestsVM);
+                //return View(RequestsVM);
+                return RedirectToAction("Create", id);
             }
-
+            
             RequestsVM.Requests.RequestScheduledDate = RequestsVM.Requests.RequestScheduledDate
                 .AddHours(RequestsVM.Requests.RequestScheduledTime.Hour)
                 .AddMinutes(RequestsVM.Requests.RequestScheduledTime.Minute);
 
             RequestsVM.Requests.RequestCreated = DateTime.Now;
+
+            if (RequestsVM.Requests.RequestScheduledDate < RequestsVM.Requests.RequestCreated)
+            {
+                return RedirectToAction("Create", id);
+            }
 
             var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             RequestsVM.Requests.CustomerId = customerId;
@@ -89,6 +123,11 @@ namespace RSHA.Areas.Customer.Controllers
                 return NotFound();
             }
 
+            var mech = _db.Mechanics.Find(RequestsVM.Requests.MechanicAssigned);
+            string mechName = mech.Name;
+
+            ViewBag.mechName = mechName;
+
             return View(RequestsVM);
         }
 
@@ -104,6 +143,11 @@ namespace RSHA.Areas.Customer.Controllers
                 RequestsVM.Requests.RequestScheduledDate = RequestsVM.Requests.RequestScheduledDate
                         .AddHours(RequestsVM.Requests.RequestScheduledTime.Hour)
                         .AddMinutes(RequestsVM.Requests.RequestScheduledTime.Minute);
+
+                if (RequestsVM.Requests.RequestScheduledDate < DateTime.Now)
+                {
+                    return RedirectToAction("Edit", id);
+                }
 
                 requestFromDb.FirstName = RequestsVM.Requests.FirstName;
                 requestFromDb.LastName = RequestsVM.Requests.LastName;
@@ -136,6 +180,11 @@ namespace RSHA.Areas.Customer.Controllers
                 return NotFound();
             }
 
+            var mech = _db.Mechanics.Find(RequestsVM.Requests.MechanicAssigned);
+            string mechName = mech.Name;
+
+            ViewBag.mechName = mechName;
+
             return View(RequestsVM);
         }
 
@@ -153,6 +202,11 @@ namespace RSHA.Areas.Customer.Controllers
             {
                 return NotFound();
             }
+
+            var mech = _db.Mechanics.Find(RequestsVM.Requests.MechanicAssigned);
+            string mechName = mech.Name;
+
+            ViewBag.mechName = mechName;
 
             return View(RequestsVM);
         }
