@@ -18,5 +18,6 @@ namespace RSHA.Data
         public DbSet<ProblemTypes> ProblemTypes { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Mechanics> Mechanics { get; set; }
+        public DbSet<Feedbacks> Feedbacks { get; set; }
     }
 }
