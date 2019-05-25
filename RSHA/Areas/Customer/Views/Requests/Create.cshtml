@@ -101,10 +101,11 @@
                         <input asp-for="Requests.RequestScheduledTime" value="" type="text" class="form-control timepicker" />
                     </div>
                 </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <br />
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Create" />
-                    <a asp-controller="Home" asp-action="Index" class="btn btn-success">Back</a>
+                    <input type="submit" class="btn btn-sub btn-sub-primary" value="Create" />
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-sub btn-sub-success">Back</a>
                 </div>
             </div>
         </form>

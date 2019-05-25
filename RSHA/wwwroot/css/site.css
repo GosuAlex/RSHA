@@ -55,14 +55,18 @@ body {
 }
 
 :root {
-    --Julius: "Julius Sans One", cursive;
     /*Classy header*/
-    --Poly: "poly", cursive;
+    --Julius: "Julius Sans One", cursive;
+    /**/
     /*Text writing hard marks*/
-    --Sawarabi: "Sawarabi Gothic", cursive;
+    --Poly: "poly", cursive;
+    /**/
     /*Ubuntu but classy*/
-    --Mandali: "Mandali", cursive;
+    --Sawarabi: "Sawarabi Gothic", cursive;
+    /**/
     /*Interface text*/
+    --Mandali: "Mandali", cursive;
+    /**/
     --gradiant: linear-gradient(to bottom, #bb2121, #d3564f, #e6827d, #f5adab, #ffffff);
     --main-color: #47dddd;
 }
@@ -108,7 +112,7 @@ body {
     height: 80px;
 }
 
-header a {
+header a, .navbar button {
     font-family: var(--Mandali);
     font-size: 1.5em;
     color: whitesmoke;
@@ -131,10 +135,10 @@ header {
         /* min-width: 7em; */
     }
 
-        header .navbar-brand:hover {
+        /*header .navbar-brand:hover {
             text-decoration: underline;
             color: white;
-        }
+        }*/
 
     header .nav-item:last-child {
         padding-right: 10em;
@@ -144,7 +148,9 @@ header {
         padding: 0 0 0 4em;
     }
 
-    header .nav-link:hover {
+    header .nav-link:hover,
+    header .navbar-brand:hover,
+    .navbar button:hover {
         /* border-bottom: 3px solid black; */
         text-decoration: underline;
         color: white;
@@ -546,7 +552,7 @@ tbody tr:hover {
     background: #014055;
 }
 
-h2 {
+h2, h4 {
     font-family: var(--Mandali);
 }
 .bg-fixed {
@@ -555,6 +561,118 @@ h2 {
     min-height: 100vh;
 }
 
+.bg-md-fixed {
+    /*background-color: var(--gradiant);*/
+    top: 0;
+    min-height: 70vh;
+}
+
 .text-normal {
-    font-family: var(--Sawarabi);
+    font-family: var(--Mandali);
+}
+
+.text-book {
+    font-family: var(--Poly);
+}
+
+.text-white {
+    color: whitesmoke;
+}
+
+a:hover {
+    color: whitesmoke;
+}
+
+.text-alertme {
+    color: gold;
+}
+
+.bg-darkme {
+    background-color: dimgray;
+}
+
+.bg-successme {
+    background-color: seagreen;
+}
+
+.bg-infome {
+    background-color:  cadetblue;
+}
+
+.bg-secondaryme {
+    background-color: darkgray !important;
+}
+
+.nobtn {
+    padding: initial;
+}
+
+/* Submit Knapp */
+/*btn btn-sub btn-primary*/
+.btn-sub {
+    padding: 0.4em 1em;
+    text-align: center;
+    text-decoration: none;
+    /*font-size: 20px;*/
+    font-size: 1.2em;
+    display: inline-block;
+    border-radius: 0.3em;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-sub-primary {
+    color: cornflowerblue;
+    border: 2px solid cornflowerblue;
+}
+
+    /*.btn-sub:before{
+        content: "";
+        background-color: #ffffff;
+        opacity: 0.6;
+        height: 100%;
+        width: 3em;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -4.5em;
+        -webkit-transform: skewX(-45deg) translateX(0);
+        transform: skewX(-45deg) translateX(0);
+        transition: none;
+    }
+
+.subKnapp:hover:before {
+    -webkit-transform: skewX(-125deg) translateX(9.7em);
+    transform: skewX(-125deg) translateX(9.7em);
+    transition: all 0.5s ease-in-out;
+}*/
+
+.btn-sub-primary:hover {
+    background-color: cornflowerblue;
+    color: #ffffff;
+}
+
+.btn-sub-success {
+    color: forestgreen;
+    border: 2px solid forestgreen;
+}
+
+.btn-sub-success:hover {
+    background-color: forestgreen;
+    color: #ffffff;
+}
+
+.btn-sub-danger {
+    color: crimson;
+    border: 2px solid crimson;
+}
+
+.btn-sub-danger:hover {
+    background-color: crimson;
+    color: #ffffff;
+}
+
+.btn-sub-bg {
+    background-color: whitesmoke;
 }

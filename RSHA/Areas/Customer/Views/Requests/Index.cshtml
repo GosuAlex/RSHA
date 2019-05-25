@@ -11,7 +11,7 @@
                 <h2 class="text-info">Request Overview</h2>
             </div>
             <div class="col-6 text-right">
-                <a asp-action="Create" class="btn btn-info"> <i class="fas fa-plus"></i>&nbsp; New Request</a>
+                <a asp-action="Locate" class="btn btn-sub btn-sub-primary"> <i class="fas fa-plus"></i>&nbsp; Request Mechanic</a>
             </div>
         </div>
 
@@ -44,7 +44,7 @@
 
                 @foreach (var item in Model.Where(m => m.Completed == false))
                 {
-                    <tr class="tbody">
+                    <tr class="tbody bg-infome">
                         <td>
                             @Html.DisplayFor(m => item.RequestCreated)
                         </td>
@@ -110,7 +110,7 @@
 
                 @foreach (var item in Model.Where(m => m.Completed == true))
                 {
-                    <tr class="tbody">
+                    <tr class="tbody bg-darkme">
                         <td>
                             @Html.DisplayFor(m => item.RequestCreated)
                         </td>
