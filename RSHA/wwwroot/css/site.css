@@ -210,6 +210,8 @@ header .container .col-md-7 .button {
     min-width: 160px;
     box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    align-content: center;
+    right: 35%;
 }
 
     .dropdown-content a {
@@ -287,10 +289,10 @@ header .container .col-md-7 .button {
     }
 
 .repair {
-    padding-top: 2em;
-    margin-bottom: 4em;
-    max-width: 40%;
-    max-height: 40%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    max-width: 50%;
+    max-height: 30%;
 }
 
 /* Footer */
@@ -433,6 +435,20 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
     }
 }
 
+#svgLogo {
+    animation: 1.6s ease-in 2.0s move;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    transform-origin: top center;
+    /*transform: scale(1.5);*/
+}
+
+@keyframes move {
+    100% {
+        transform: scale(.8);
+    }
+}
+
 /* SVG Animation draw */
 
 /* Media Queries */
@@ -453,6 +469,15 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
     .navbar {
         font-size:0.8em;
     }
+
+
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .tableme .resp-biglet {
+        display: none !important;
+    }
 }
 
 @media only screen and (max-width: 1038px) {
@@ -460,7 +485,6 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
     .navbar {
         font-size: 0.7em;
     }
-
 }
 
 @media only screen and (min-width: 992px) {
@@ -472,11 +496,27 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
     .login-sm {
         display: none;
     }
+
+    #usernameA {
+        padding-right: 20px;
+    }
 }
 
 @media only screen and (max-width: 991px) {
     header .navbar-brand {
         padding-left: 1rem;
+    }
+
+    #navbar {
+        text-align: center;
+    }
+
+    header .nav-item:last-child {
+        padding-right: 0;
+    }
+
+    #usernameA {
+        padding-right: 0px;
     }
 
     .section-1 .row .col-md-6 .panel h1 {
@@ -504,6 +544,15 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
         display: block;
         margin-left: 45px;
         font-size: 1.1em;
+        text-align:center;
+    }
+
+    .tableme {
+        width: initial;
+    }
+
+    .tableme .resp-tablet {
+    display: none !important;
     }
 
 }
@@ -547,7 +596,31 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
     .pushdown {
         margin-top: 100px;
     }
+
+    .tableme {
+        width: 90%;
+    }
+
+    .tableme .resp-mobile {
+    display: none !important;
+    }
+
 }
+
+@media only screen and (max-width: 575px) {
+
+    .tableme {
+        margin-left: 0px !important;
+        width:100%;
+    }
+
+    .tableme .resp-mobile {
+    display: none !important;
+    }
+
+}
+
+
 
 /* Media Queries */
 
@@ -568,6 +641,14 @@ background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf
     border-radius: 0.25em;
     border-collapse: collapse;
     margin: 1em;
+}
+
+.word-break {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 th {
@@ -725,3 +806,31 @@ a:hover {
 /*.bg-user {
     background-color: ;
 }*/
+
+.redWorld {
+    background-image: url("../images/RedWorld.png");
+    top: 15%;
+    left: -28%;
+    height: 150%;
+    width: 150%;
+    position: absolute;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+}
+
+.fallinto {
+    animation: fall 2s;
+}
+
+@keyframes fall {
+    0% {
+        top: -20%;
+        opacity: 0;
+    }
+
+    100% {
+        top: 0%;
+        opacity: 1;
+    }
+}
+

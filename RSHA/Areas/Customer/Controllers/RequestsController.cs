@@ -53,11 +53,6 @@ namespace RSHA.Areas.Customer.Controllers
              
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _db.ApplicationUser.Find(userId);
-            //string userCarModel = user.CarModel;
-            //string userCarLicensePlate = user.CarLicensePlate;
-            //string userPhoneNumber = user.PhoneNumber;
-            //string userFirstName = user.FirstName;
-            //string userLastName = user.LastName;
             
             List<string> userProfileInfo = new List<string>();
             userProfileInfo.AddRange(new List<string>
@@ -68,7 +63,6 @@ namespace RSHA.Areas.Customer.Controllers
                 new string(user.FirstName),
                 new string(user.LastName)
             });
-            //string test = userProfileInfo[0];
 
             ViewBag.userProfileInfo = userProfileInfo;
             ViewBag.mechName = mechName;

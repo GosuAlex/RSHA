@@ -23,7 +23,6 @@
                           <div class="form-group">
                               <div class="">
                                   <h4>Send feedback to administrator</h4>
-                                  <label asp-for="Feedback.Message"></label>
                               </div>
                               <div class="">
                                   @*<input asp-for="Feedback.Message" class="form-control" />*@
@@ -61,7 +60,7 @@
                               <td>
                                   @Html.DisplayFor(m => item.FeedbackCreated)
                               </td>
-                              <td>
+                              <td class="word-break">
                                   @Html.DisplayFor(m => item.Message)
                               </td>
                           </tr>

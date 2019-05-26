@@ -2,14 +2,14 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="section-0 container text-center">
+<div class="redWorld"><pre> </pre></div>
+<div class="section-0 container-fluid text-center">
     <div class="row">
-        <div class="col-md-7 col-sm-12">
-            <h6>This the best moterhfucker service you can find</h6>
+        <div class="col-md-7 col-sm-12 fallinto">
+            <h6>The best service you can find</h6>
             <h1>Roadside Help Assistance</h1>
             <p>
-                Use this bitch web-application to find and set an appointment to your local mechanic workshop.
+                Use this web-application to find and set an appointment to your local mechanic workshop.
             </p>
             @if (User.IsInRole(StaticDetails.MechanicEndUser))
             {
@@ -89,14 +89,6 @@
 
 
 
-
-
-
-
-
-
-
-
                 <use id="Draw-V" class="Animate-v-outside" xlink:href="#v-outside" />
 
 
@@ -113,14 +105,6 @@
 
 
 
-
-
-
-
-
-
-
-
                 <use id="Draw-Mech" class="Animate-Mech" xlink:href="#Mech" />
 
 
@@ -129,12 +113,17 @@
 
 
 
+
+
+
+                
+
+
                             <!--<use class="Animate-Fill" xlink:href="#Logo-Group" /> -->
                         </svg>
             </div>
-
+            
             <!-- SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG SVG -->
-
 
         </div>
     </div>
@@ -143,7 +132,7 @@
     </header>
 
 <main>
-    <section class="section-1">
+    @*<section class="section-1">
         <div class="container text-center">
             <div class="row">
                 <div class="col-md-6">
@@ -167,7 +156,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>*@
 
     <section class="section-4">
         <div class="team row">
@@ -180,10 +169,10 @@
                         <h3 class="card-title">Find nearby mechanics</h3>
                         <p class="card-text">
                             Our app is integrated with google maps, making the search for an mechanic incredible
-                            simple!
+                            simple !
                         </p>
-                        <a href="#" class="text-primary text-decoration-none">Try a search!</a>
-                        <p class="text-black-50">...</p>
+                        <a asp-area="Customer" asp-controller="Requests" asp-action="Locate" class="text-primary text-decoration-none">Try a search!</a>
+                        @*<p class="text-black-50">...</p>*@
                     </div>
                 </div>
             </div>
@@ -195,28 +184,29 @@
                     <div class="card-body">
                         <h3 class="card-title">Make appointments</h3>
                         <p class="card-text">
-                            this is what i would say for myself.
+                            All in one app where you can be in conversation with several mechanics and appointments at once.
                         </p>
-                        <a href="#" class="text-primary text-decoration-none">Go somewhere</a>
-                        <p class="text-black-50">...</p>
+                        <a asp-area="Customer" asp-controller="Requests" asp-action="Index" class="text-primary text-decoration-none">View Request</a>
+                        @*<p class="text-black-50">...</p>*@
                     </div>
                 </div>
             </div>
             <div class="col-md-4 col-12 text-center">
                 <div class="card mr-2 d-inline-block shadow-lg">
                     <div class="card-img-top">
-                        <img src="graphic.png" alt="profile bilde" class="img-fluid">
+                        <img src="~/images/user-profile.png" alt="profile bilde" class="img-fluid repair">
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">Profile</h3>
                         <p class="card-text">
-                            this is what i would say for myself.
+                            Register to use and keep track of all your appointment history. Make one now and be set to go.
                         </p>
-                        <a href="#" class="text-primary text-decoration-none">Go somewhere</a>
-                        <p class="text-black-50">...</p>
+                        <a href="/Identity/Account/Register" class="text-primary text-decoration-none">Register</a>
+                        @*<p class="text-black-50">...</p>*@
                     </div>
                 </div>
             </div>
         </div>
 
     </section>
+</main>
