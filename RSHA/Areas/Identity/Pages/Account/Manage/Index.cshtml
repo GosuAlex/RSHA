@@ -62,11 +62,35 @@
                 }
                 <div asp-validation-summary="All" class="text-danger"></div>
 
-                <button type="submit" class="btn btn-sub btn-sub-primary btn-sub-bg">Save</button>
+                <button type="submit" onclick="accept()" class="btn btn-sub btn-sub-primary btn-sub-bg">Save</button>
             </form>
         </div>
     </div>
 </div>
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+    <script>
+
+        function accept() {
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": 'toast-top-right',
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "1200",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            new toastr.success('Your profile was udated', 'Updated')
     }
+
+    </script>
