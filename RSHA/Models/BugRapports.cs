@@ -11,6 +11,6 @@ namespace RSHA.Models
 
         public string Message { get; set; }
 
-        public int UserID { get; set; }
+        public string UserID { get; set; }
     }
 }

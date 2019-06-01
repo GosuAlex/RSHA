@@ -68,5 +68,36 @@ namespace RSHA.Areas.Mechanic.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+
+        // GET Bug Action Method
+        public IActionResult BugReport()
+        {
+            var bugReport = new BugRapports();
+
+            return View(bugReport);
+        }
+
+
+        // POST Bug Action Method
+        [HttpPost, ActionName("BugReport")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BugReportPOST(BugRapports bugReport)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(bugReport);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _db.ApplicationUser.Find(userId);
+            bugReport.UserID = user.Id;
+
+            _db.BugRapports.Add(bugReport);
+            await _db.SaveChangesAsync();
+
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "Customer" });
+        }
     }
 }
