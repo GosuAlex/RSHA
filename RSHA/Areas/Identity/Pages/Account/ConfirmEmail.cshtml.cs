@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,7 @@ namespace RSHA.Areas.Identity.Pages.Account
             }
 
             return Page();
+            //return RedirectToAction("ConfirmEmail", "Home", new { area = "Customer" });
         }
     }
 }

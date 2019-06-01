@@ -5,12 +5,15 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RSHA.Data;
+using RSHA.Functions;
 using RSHA.Models;
 
 namespace RSHA.Areas.Identity.Pages.Account.Manage
@@ -21,17 +24,20 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _db;
+        private IConfiguration _configuration { get; }
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             IEmailSender emailSender,
-            ApplicationDbContext db)
+            ApplicationDbContext db,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _db = db;
+            _configuration = configuration;
         }
 
         public string Username { get; set; }
@@ -165,6 +171,7 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
             }
 
 
+            string name = User.Identity.Name;
             var userId = await _userManager.GetUserIdAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -173,10 +180,16 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            //await _emailSender.SendEmailAsync(
+            //    email,
+            //    "Confirm your email",
+            //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+            string textInEmail = @"Hello, " + name + ". Please confirm your account by clicking \r\r" + " <a href=\"" + callbackUrl + "\">here</a>\r\rIf you did not request this, you can ignore this safely.\rHave a pleasant day.";
+
+            var sendEmail = new SendEmail();
+            sendEmail.ConfirmEmail(name, email, textInEmail, _configuration["RSHAEmail:EmailPassword"]);
+
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();

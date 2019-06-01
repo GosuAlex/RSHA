@@ -10,5 +10,6 @@ namespace RSHA.Models.ViewModels
         public Requests Requests { get; set; }
         public IEnumerable<ProblemTypes> ProblemTypes { get; set; }
         public IEnumerable<Mechanics> Mechanics { get; set; }
+        //public PagingInfo PagingInfo { get; set; }
     }
 }

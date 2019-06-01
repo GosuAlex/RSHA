@@ -16,7 +16,7 @@
             <div class="p-4 border rounded">
                 <input hidden value="@ViewBag.id" asp-for="Requests.MechanicAssigned" />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group row" >
+                <div class="form-group row">
                     <div class="col-sm-2 col-3">
                         <label asp-for="Requests.FirstName"></label>
                     </div>
@@ -91,6 +91,14 @@
                     </div>
                     <div class="col-sm-10 col-9">
                         <label readonly class="form-control">@ViewBag.mechName</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2 col-3">
+                        <label asp-for="Requests.Completed"></label>
+                    </div>
+                    <div class="col-sm-10 col-9">
+                        <input type="checkbox" asp-for="Requests.Completed" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">

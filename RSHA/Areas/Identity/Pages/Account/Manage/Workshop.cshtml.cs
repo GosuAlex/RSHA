@@ -69,12 +69,34 @@ namespace RSHA.Areas.Identity.Pages.Account.Manage
 
             var mechanic = await _db.Mechanics.FirstOrDefaultAsync(m => m.UserId == id);
 
-            if (Mechanic.Name != mechanic.Name) { mechanic.Name = Mechanic.Name; }
-            if (Mechanic.Street != mechanic.Street) { mechanic.Street = Mechanic.Street; }
-            if (Mechanic.City != mechanic.City) { mechanic.City = Mechanic.City; }
-            if (Mechanic.PostalCode != mechanic.PostalCode) { mechanic.PostalCode = Mechanic.PostalCode; }
-            if (Mechanic.State != mechanic.State) { mechanic.State = Mechanic.State; }
+            //var mechanic = new Mechanics();
 
+            if (mechanic == null)
+            {
+                var mechanicEdit = new Mechanics();
+
+                mechanicEdit.Name = Mechanic.Name;
+                mechanicEdit.Street = Mechanic.Street;
+                mechanicEdit.City = Mechanic.City;
+                mechanicEdit.PostalCode = Mechanic.PostalCode;
+                mechanicEdit.State = Mechanic.State;
+                mechanicEdit.UserId = id;
+
+                _db.Mechanics.Add(mechanicEdit);
+                await _db.SaveChangesAsync();
+
+                return RedirectToPage();
+            }
+            else
+            {
+                mechanic.Name = Mechanic.Name;
+                mechanic.Street = Mechanic.Street;
+                mechanic.City = Mechanic.City;
+                mechanic.PostalCode = Mechanic.PostalCode;
+                mechanic.State = Mechanic.State;  
+            }
+
+            
             await _db.SaveChangesAsync();
 
             StatusMessage = "Your profile has been updated";

@@ -208,7 +208,7 @@
 </div>
 </header>
 <script>
-    /** 
+    
     function accept() {
         toastr.options = {
             "closeButton": false,
@@ -229,5 +229,26 @@
 
         new toastr.success('The request was accepted', 'Accepted')
     }
-    */
+
+    function del() {
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": 'toast-top-right',
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1200",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        new toastr.warning('The request was NOT accepted', 'Deleted')
+    }
+    
 </script>

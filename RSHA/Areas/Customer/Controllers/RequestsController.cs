@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,7 @@ namespace RSHA.Areas.Customer.Controllers
     public class RequestsController : Controller
     {
         private readonly ApplicationDbContext _db;
+        //private int PageSize = 2;
         private IConfiguration _configuration { get; }
 
         [BindProperty]
@@ -36,13 +38,34 @@ namespace RSHA.Areas.Customer.Controllers
         }
 
         // INDEX Action Method      --------------------------------    INDEX
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index(int productPage = 1)
+        public async Task<IActionResult> Index(int productPage = 1)
         {
+            //StringBuilder param = new StringBuilder();
+            //param.Append("/Customer/Requests?productsPage=:");
+
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var requests = _db.Requests.Where(u => u.CustomerId == id).Include(m => m.ProblemTypes);
+            //IQueryable<Models.Requests> 
+            //var requests = _db.Requests.Where(u => u.CustomerId == id).ToList();
+
+            //var count = requests.Count();
+
+            //requests = requests.OrderBy(r => r.RequestCreated)
+            //    .Skip((productPage - 1) * PageSize)
+            //    .Take(PageSize).ToList();
+
+            //PagingInfo pagingInfo = new PagingInfo
+            //{
+            //    CurrentPage = productPage,
+            //    RequestsPerPage = PageSize,
+            //    TotalRequests = count,
+            //    urlParam = param.ToString()
+            //};
 
             return View(await requests.ToListAsync());
+            //return View(requests);
         }
 
         // GET Create Action Method --------------------------------    CREATE
