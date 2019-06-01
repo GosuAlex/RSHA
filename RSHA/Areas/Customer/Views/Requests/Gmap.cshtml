@@ -1,32 +1,22 @@
-﻿@model string[]
+﻿@model IEnumerable<RSHA.Models.Mechanics>
 @{
     ViewData["Title"] = "Gmap";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Gmap</h2>
+<div class="bg-md-fixed">
 
+    <br /><br />
+    <div class="container card" style="padding-bottom:15px;">
+        <br /><br />
+        <h2 class="text-success text-center">Google maps</h2>
 
-@foreach (var item in Model)
-{
-    <p>@item</p>
-}
-<br /> <br />   <br />  <br />     <br />
-@foreach (var item in Model)
-{
-    //string[] splittedItems = item.Split("*");
-    //string pos = splittedItems[0];
-    //string name = splittedItems[1];
-    //<p>@pos</p> <p>@name</p>
-    string splittedItems;
-    splittedItems = item;
-    <p>@splittedItems</p>
-}
+        <div id="map" style="height:800px; width:100%;"></div>
 
-
-<div id="map" style="height:800px; width:100%;"></div>
-
-
+    </div>
+</div>
+<br /><br />
+</header>
 
 
 <script>
@@ -73,8 +63,8 @@
 
     function createMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 59, lng: 10 },
-            zoom: 8
+            center: { lat: 59.3333, lng: 10 },
+            zoom: 9
             //disableDefaultUI: true
             //style: [  ]
         });
@@ -83,25 +73,38 @@
 
        @foreach (var item in Model)
        {
-           string[] splittedItems = item.Split("*");
-           string pos = splittedItems[0];
-           string name = splittedItems[1];
+           string clat = item.Latitude.ToString();
+           clat = clat.Replace(',', '.');
+           string clon = item.Longitude.ToString();
+           clon = clon.Replace(',', '.');
+           string name = item.Name;
+           string id = item.Id.ToString();
+
             <text>
-                addMarker(pos, name);
-            </text>
+            var latlng = {
+            lat: @clat,
+            lng: @clon,
+            };
+
+           addMarker(latlng, "@name", "@id")
+
+           </text>
         }
 
-        var marker = new google.maps.Marker({
-            position: { lat: 60, lng: 9 },
-            icon: {
-                url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-                labelOrigin: new google.maps.Point(15, 40),
-            },
-            label: { color: '#000000', fontWeight: 'bold', fontSize: '18px', text: 'Tetsetse testttes' },
-            map: map
-        });
+           //var marker = new google.maps.Marker({
+           // position: { lat: 60, lng: 9 },
+           // icon: {
+           // url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+           //     labelOrigin: new google.maps.Point(15, 40),
+           // },
+           // label: { color: '#000000', fontWeight: 'bold', fontSize: '18px', text: 'Tetsetse testttes' },
+           // map: map,
+           // url: 'http://www.wikipedia.org/'
+           // });
 
-        function addMarker(pos, name) {
+
+
+        function addMarker(pos, name, id) {
             var mechMarker = new google.maps.Marker({
                 position: pos,
                 icon: {
@@ -109,9 +112,16 @@
                     labelOrigin: new google.maps.Point(15, 40),
                 },
                 label: { color: '#000000', fontWeight: 'bold', fontSize: '18px', text: name },
-                map: map
+                map: map,
+                url: 'Create/'+id
+            });
+
+            google.maps.event.addListener(mechMarker, 'click', function () {
+                window.location.href = mechMarker.url;
             });
         }
+
+
 
         // Mark User Icon
 
