@@ -111,7 +111,7 @@ namespace RSHA.Areas.Customer.Controllers
 
             RequestsVM.Requests.RequestCreated = DateTime.Now;
 
-            if (RequestsVM.Requests.RequestScheduledDate < RequestsVM.Requests.RequestCreated)
+            if (RequestsVM.Requests.RequestScheduledDate.AddMinutes(1) < RequestsVM.Requests.RequestCreated)
             {
                 return RedirectToAction("Create", id);
             }
@@ -161,7 +161,7 @@ namespace RSHA.Areas.Customer.Controllers
                         .AddHours(RequestsVM.Requests.RequestScheduledTime.Hour)
                         .AddMinutes(RequestsVM.Requests.RequestScheduledTime.Minute);
 
-                if (RequestsVM.Requests.RequestScheduledDate < DateTime.Now)
+                if (RequestsVM.Requests.RequestScheduledDate.AddMinutes(1) < DateTime.Now)
                 {
                     return RedirectToAction("Edit", id);
                 }
