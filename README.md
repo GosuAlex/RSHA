@@ -9,4 +9,4 @@ This web-application is to provide an easy overview for customers to find & make
 Mechanics can create profile and input their workshop address details. They will also have a request overview for incoming, current and past requests that has been sent to their workshop. Mechanics can accept or deny requests from customers. They can also send feedback messeges to admin.
 If a request is denied, accepted or finished, the customer will get an email notification about that.
 
-You can view the web-application on [Youtube](https://www.youtube.com/watch?v=7zenvfL_sCo/) or find the video file above. 
+You can view the web-application on [Youtube](https://www.youtube.com/watch?v=7zenvfL_sCo/)
